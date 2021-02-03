@@ -5,7 +5,7 @@
   "description": "A discord bot that displays a dialy image from Google photos",
   "main": "out/index.js",
   "scripts": {
-    "start": "node ./out/index.js",
+    "start": "npm run build && node ./out/index.js",
     "watch:start": "nodemon ./out/index.js",
     "watch:compile": "tsc -watch",
     "build": "tsc",
