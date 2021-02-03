@@ -21,7 +21,8 @@
   "homepage": "https://github.com/Josee9988/Dialy-image-discord-bot#readme",
   "dependencies": {
     "discord.js": "^12.5.1",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "google-photos-album-image-url-fetch": "^2.2.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.22",

@@ -1,4 +1,9 @@
+import * as GooglePhotosAlbum from 'google-photos-album-image-url-fetch';
+import {ImageInfo} from "google-photos-album-image-url-fetch/dist/imageInfo";
+
 export default class Commands {
+    private albumLink: string;
+
     constructor(private PREFIX: string, private client: any) {
     }
 
@@ -11,6 +16,9 @@ export default class Commands {
                 .split(/\s+/);
 
             switch (CMD_NAME.toLocaleLowerCase()) {
+                case "albumlink":
+                    this.setAlbumLink(message, args).catch(message.channel.send(`:interrobang:An error ocurred!`));
+                    break;
                 case "help":
                     this.helpCommand(message);
                     break;
@@ -53,5 +61,27 @@ For more information please visit *Dialy Image Bot Github repository*: https://g
 
     private unknownCommand(message: any) {
         message.channel.send(":interrobang::interrobang:We couldn't find your command, make sure you typed it correctly.");
+    }
+
+    private async setAlbumLink(message: any, args: string[]) {
+        this.albumLink = args[0];
+        //TODO: save the album link to a database or elsewhere.
+        message.channel.send("Your album has been successfully saved. A new photo will appear every day.");
+        message.channel.send("But for a sneak peek, here is one :D");
+        await this.sendRandomPhoto(message);
+
+
+        //console.log(JSON.stringify(re, null, 2));
+    }
+
+
+    private async sendRandomPhoto(message: any) {
+        if (this.albumLink === null || this.albumLink === undefined || this.albumLink.length < 20) return;
+        const photos: ImageInfo[] | null = await GooglePhotosAlbum.fetchImageUrls(this.albumLink);
+        const randomPhoto = Math.floor((Math.random() * Object.keys(photos).length) + 1);
+
+        message.channel.send("Here's your pic LOL", {files: [photos[randomPhoto].url]});
+
+        message.channel.send("The photo was taken on the day: " + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString());
     }
 }
