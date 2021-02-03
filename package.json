@@ -8,7 +8,8 @@
     "start": "node ./out/index.js",
     "watch:start": "nodemon ./out/index.js",
     "watch:compile": "tsc -watch",
-    "compile": "tsc"
+    "build": "tsc",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
