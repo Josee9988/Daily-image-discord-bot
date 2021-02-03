@@ -1,5 +1,6 @@
 {
   "name": "dialy-image-discord-bot",
+  "displayName": "Dialy Image Bot",
   "version": "0.0.1",
   "description": "A discord bot that displays a dialy image from Google photos",
   "main": "out/index.js",
@@ -13,11 +14,15 @@
     "type": "git",
     "url": "git+https://github.com/Josee9988/Dialy-image-discord-bot.git"
   },
-  "author": "@Josee9988",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Josee9988/Dialy-image-discord-bot/issues"
+  "author": {
+    "name": "Jose Gracia Berenguer",
+    "email": "jgracia9988@gmail.com"
   },
+  "bugs": {
+    "url": "https://github.com/Josee9988/Dialy-image-discord-bot/issues",
+    "email": "jgracia9988@gmail.com"
+  },
+  "license": "SEE LICENSE IN LICENSE",
   "homepage": "https://github.com/Josee9988/Dialy-image-discord-bot#readme",
   "dependencies": {
     "discord.js": "^12.5.1",
