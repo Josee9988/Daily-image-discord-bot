@@ -1,2 +1,1 @@
-web: npm run compile
-web: npm run start
+Worker: npm run compile && npm run start
