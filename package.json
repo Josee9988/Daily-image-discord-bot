@@ -10,8 +10,9 @@
     "watch:compile": "tsc -watch",
     "build": "tsc",
     "tsc": "tsc",
-    "postinstall": "npm run tsc"
+    "postinstall": "tsc && && rm -v -rf src"
   },
+  "engines": { "node": "^14.15.0" },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Josee9988/Dialy-image-discord-bot.git"
