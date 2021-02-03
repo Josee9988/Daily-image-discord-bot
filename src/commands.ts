@@ -1,7 +1,5 @@
 export default class Commands {
-
     constructor(private PREFIX: string, private client: any) {
-
     }
 
     messageHandler(message: any) {
@@ -11,7 +9,6 @@ export default class Commands {
                 .trim()
                 .substring(this.PREFIX.length + 1)
                 .split(/\s+/);
-
 
             switch (CMD_NAME.toLocaleLowerCase()) {
                 case "help":
@@ -26,14 +23,11 @@ export default class Commands {
                 default:
                     this.unknownCommand(message);
             }
-
         }
     }
 
-
     private helpCommand(message: any) {
-        message.channel.send(`
-    -------------------------------------------------------------------------------------
+        message.channel.send(`    -------------------------------------------------------------------------------------
 \`\`\`ini
 [Dialy Image Bot has been summoned here beep boop bep bep ⚡ ⚡ ]
 \`\`\`   
@@ -46,10 +40,8 @@ The prefix of the bot is: **\`!dimg\`**
 For more information please visit *Dialy Image Bot Github repository*: https://github.com/Josee9988/Dialy-image-discord-bot
 \`\`\`diff
 + Closing connection with dimg💔 
-\`\`\`
-    `)
+\`\`\``)
     }
-
 
     private pingCommand(message: any) {
         message.channel.send(`🏓Latency is **${Date.now() - message.createdTimestamp}**ms. API Latency is **${Math.round(this.client.ws.ping)}**ms`);

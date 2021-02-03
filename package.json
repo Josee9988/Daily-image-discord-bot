@@ -1,7 +1,7 @@
 {
   "name": "dialy-image-discord-bot",
   "version": "0.0.1",
-  "description": "A discord bot that displays a dialy image from Google fotos",
+  "description": "A discord bot that displays a dialy image from Google photos",
   "main": "out/index.js",
   "scripts": {
     "start": "node ./out/index.js",
