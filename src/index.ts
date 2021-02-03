@@ -1,12 +1,13 @@
 require('dotenv').config();
 import Commands from './commands';
+import { Message } from 'discord.js';
 
-const {Client} = require('discord.js');
+import { Client } from 'discord.js';
 const client = new Client();
 const botCommands = new Commands("!dimg", client)
 
-client.on('message', (message: any) => {
-    botCommands.messageHandler(message);
+client.on('message', async (message: Message) => {
+    await botCommands.messageHandler(message);
 });
 
 

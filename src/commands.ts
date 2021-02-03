@@ -1,5 +1,6 @@
 import * as GooglePhotosAlbum from 'google-photos-album-image-url-fetch';
 import {ImageInfo} from "google-photos-album-image-url-fetch/dist/imageInfo";
+import {Message} from "discord.js";
 
 export default class Commands {
     private albumLink: string;
@@ -7,8 +8,8 @@ export default class Commands {
     constructor(private PREFIX: string, private client: any) {
     }
 
-    messageHandler(message: any) {
-        if (message.author.bot) return; //ignore bot messages
+    async messageHandler(message: Message) {
+        if (message.author.bot) return; //ignores bot messages
         if (message.content.startsWith(this.PREFIX)) {
             const [CMD_NAME, ...args] = message.content
                 .trim()
@@ -17,7 +18,7 @@ export default class Commands {
 
             switch (CMD_NAME.toLocaleLowerCase()) {
                 case "albumlink":
-                    this.setAlbumLink(message, args);
+                    await this.setAlbumLink(message, args);
                     break;
                 case "help":
                     this.helpCommand(message);
@@ -34,7 +35,7 @@ export default class Commands {
         }
     }
 
-    private helpCommand(message: any) {
+    private helpCommand(message: Message) {
         message.channel.send(`    -------------------------------------------------------------------------------------
 \`\`\`ini
 [Dialy Image Bot has been summoned here beep boop bep bep ⚡ ⚡ ]
@@ -55,35 +56,30 @@ For more information please visit *Dialy Image Bot Github repository*: https://g
         message.channel.send(`🏓Latency is **${Date.now() - message.createdTimestamp}**ms. API Latency is **${Math.round(this.client.ws.ping)}**ms`);
     }
 
-    private pongCommand(message: any) {
+    private pongCommand(message: Message) {
         message.channel.send(`🏓PING!!!!!!!!!!!!🏓`);
     }
 
-    private unknownCommand(message: any) {
+    private unknownCommand(message: Message) {
         message.channel.send(":interrobang::interrobang:We couldn't find your command, make sure you typed it correctly.");
     }
 
-    private setAlbumLink(message: any, args: string[]) {
+    private async setAlbumLink(message: Message, args: string[]) {
         this.albumLink = args[0];
         //TODO: save the album link to a database or elsewhere.
-        message.channel.send("Your album has been successfully saved. A new photo will appear every day.");
-        message.channel.send("But for a sneak peek, here is one :D");
-        console.log("SEND RANDOM PHOTO FROM ALBUMLINK");
+        await message.channel.send("Your album has been successfully saved. A new photo will appear every day.");
+        await message.channel.send("But for a sneak peek, here is one :D");
         this.sendRandomPhoto(message).catch(r => console.error(r));
-
-
-        //console.log(JSON.stringify(re, null, 2));
     }
 
 
-    private async sendRandomPhoto(message: any) {
+    private async sendRandomPhoto(message: Message) {
         if (this.albumLink === null || this.albumLink === undefined || this.albumLink.length < 20) return;
         const photos: ImageInfo[] | null = await GooglePhotosAlbum.fetchImageUrls(this.albumLink);
         const randomPhoto = Math.floor((Math.random() * Object.keys(photos).length) + 1);
 
-        message.channel.send("Here's your pic LOL", {files: [photos[randomPhoto].url]});
-        message.channel.send(photos[randomPhoto].url);
-
-        message.channel.send("The photo was taken on the day: **" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
+        await message.channel.send("Here's your pic LOL", {files: [photos[randomPhoto].url]});
+        await message.channel.send(photos[randomPhoto].url);
+        await message.channel.send("The photo was taken on the day: **" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
     }
 }
