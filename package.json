@@ -9,7 +9,8 @@
     "watch:start": "nodemon ./out/index.js",
     "watch:compile": "tsc -watch",
     "build": "tsc",
-    "postinstall": "npm run build"
+    "tsc": "tsc",
+    "postinstall": "npm run tsc"
   },
   "repository": {
     "type": "git",
