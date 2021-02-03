@@ -23,10 +23,13 @@ export default class Commands {
                     await this.setAlbumLink(message, args);
                     break;
                 case "channel":
-                    this.setChannel(message, args);
+                    await this.setChannel(message, args);
                     break;
                 case "help":
                     this.helpCommand(message);
+                    break;
+                case "info":
+                    this.infoCommand(message);
                     break;
                 case "ping":
                     this.pingCommand(message);
@@ -38,23 +41,6 @@ export default class Commands {
                     this.unknownCommand(message);
             }
         }
-    }
-
-    private helpCommand(message: Message) {
-        message.channel.send(`    -------------------------------------------------------------------------------------
-\`\`\`ini
-[Dialy Image Bot has been summoned here beep boop bep bep ⚡ ⚡ ]
-\`\`\`   
-**Dialy Image Bot** :robot:
-The prefix of the bot is: **\`!dimg\`**
-
-**Command list**:fire: :
-**\`help\`** **\`channel\`** **\`albumlink\`** **\`ping\`** **\`pong\`**
-
-For more information please visit *Dialy Image Bot Github repository*: https://github.com/Josee9988/Dialy-image-discord-bot
-\`\`\`diff
-+ Closing connection with dimg💔 
-\`\`\``)
     }
 
     private pingCommand(message: any) {
@@ -88,14 +74,10 @@ For more information please visit *Dialy Image Bot Github repository*: https://g
             await message.channel.send(photos[randomPhoto].url);
             await message.channel.send("The photo was taken on the day: **" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
         } else { // selected channel
-
             await this.client.channels.cache.get(this.channelToSpeakIn).send("Here's your pic LOL", {files: [photos[randomPhoto].url]});
             await this.client.channels.cache.get(this.channelToSpeakIn).send(photos[randomPhoto].url);
             await this.client.channels.cache.get(this.channelToSpeakIn).send("The photo was taken on the day: **" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
-
         }
-
-
     }
 
     private async setChannel(message: Message, args: string[]) {
@@ -106,5 +88,33 @@ For more information please visit *Dialy Image Bot Github repository*: https://g
         } else {
             await message.channel.send(":interrobang:Your channel couldn't be found. Please re-write it again :D");
         }
+    }
+
+    private helpCommand(message: Message) {
+        message.channel.send(`    -------------------------------------------------------------------------------------
+\`\`\`ini
+[Dialy Image Bot has been summoned here beep boop bep bep ⚡ ⚡ ]
+\`\`\`   
+**Dialy Image Bot** :robot:
+The prefix of the bot is: **\`!dimg\`**
+
+**Command list**:fire: :
+**\`help\`** **\`info\`** **\`channel\`** **\`albumlink\`** **\`ping\`** **\`pong\`**
+
+For more information please visit *Dialy Image Bot Github repository*: https://github.com/Josee9988/Dialy-image-discord-bot
+\`\`\`diff
++ Closing connection with dimg💔 
+\`\`\``)
+    }
+
+    private infoCommand(message: any) {
+        message.channel.send(
+            `**dimg info**
+
+**Contact the creator of the bot**:
+LinkedIn: https://www.linkedin.com/in/jose-gracia/
+GitHub: https://github.com/Josee9988
+Email: jgracia9988@gmail.com
+Personal page: http://jgracia.es/`);
     }
 }
