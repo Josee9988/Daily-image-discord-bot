@@ -17,7 +17,7 @@ export default class Commands {
 
             switch (CMD_NAME.toLocaleLowerCase()) {
                 case "albumlink":
-                    this.setAlbumLink(message, args).catch(message.channel.send(`:interrobang:An error ocurred!`));
+                    this.setAlbumLink(message, args);
                     break;
                 case "help":
                     this.helpCommand(message);
@@ -63,12 +63,13 @@ For more information please visit *Dialy Image Bot Github repository*: https://g
         message.channel.send(":interrobang::interrobang:We couldn't find your command, make sure you typed it correctly.");
     }
 
-    private async setAlbumLink(message: any, args: string[]) {
+    private setAlbumLink(message: any, args: string[]) {
         this.albumLink = args[0];
         //TODO: save the album link to a database or elsewhere.
         message.channel.send("Your album has been successfully saved. A new photo will appear every day.");
         message.channel.send("But for a sneak peek, here is one :D");
-        await this.sendRandomPhoto(message);
+        console.log("SEND RANDOM PHOTO FROM ALBUMLINK");
+        this.sendRandomPhoto(message).catch(r => console.error(r));
 
 
         //console.log(JSON.stringify(re, null, 2));
@@ -81,7 +82,8 @@ For more information please visit *Dialy Image Bot Github repository*: https://g
         const randomPhoto = Math.floor((Math.random() * Object.keys(photos).length) + 1);
 
         message.channel.send("Here's your pic LOL", {files: [photos[randomPhoto].url]});
+        message.channel.send(photos[randomPhoto].url);
 
-        message.channel.send("The photo was taken on the day: " + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString());
+        message.channel.send("The photo was taken on the day: **" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
     }
 }
