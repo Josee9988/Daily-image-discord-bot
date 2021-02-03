@@ -10,7 +10,9 @@
     "watch:compile": "tsc -watch",
     "build": "tsc",
     "tsc": "tsc",
-    "postinstall": "tsc"
+    "postinstall": "tsc",
+    "heroku-prebuild": "export NPM_CONFIG_PRODUCTION=false; export NODE_ENV=; NPM_CONFIG_PRODUCTION=false NODE_ENV=development npm install --only=dev --dev",
+    "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production;"
   },
   "engines": { "node": "^14.15.0" },
   "repository": {
@@ -30,13 +32,13 @@
   "dependencies": {
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "google-photos-album-image-url-fetch": "^2.2.0",
+    "google-photos-album-image-url-fetch": "^2.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7",
     "typescript": "^4.1.3",
     "@types/node": "^14.14.22",
     "@types/ws": "^7.4.0",
     "tslint": "^6.1.3"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7"
   }
 }
