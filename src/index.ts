@@ -4,7 +4,7 @@ const {Client} = require('discord.js');
 const client = new Client();
 const PREFIX = "$";
 
-client.on('message', (message) => {
+client.on('message', (message: any) => {
     if (message.author.bot) return; //ignore bot messages
     if (message.content.startsWith(PREFIX)){
         const [CMD_NAME, ...args] = message.content

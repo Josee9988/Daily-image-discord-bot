@@ -1,0 +1,25 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "no-duplicate-key": true,
+    "curly": true,
+    "semicolon": [
+      true,
+      "always"
+    ],
+    "completed-docs": true,
+    "ordered-imports": true,
+    "no-consecutive-blank-lines": false,
+    "object-literal-sort-keys": false,
+    "no-bitwise": false,
+    "variable-name": true,
+    "await-promise": true,
+    "quotemark": false,
+    "indent": true,
+    "max-line-length": [false, 100],
+    "triple-equals": true,
+    "no-invalid-this": true,
+    "no-console": [true, "log", "warn"]
+  },
+  "defaultSeverity": "warning"
+}
