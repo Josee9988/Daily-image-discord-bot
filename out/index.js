@@ -15,9 +15,7 @@ const discord_js_1 = require("discord.js");
 const client = new discord_js_1.Client();
 const botCommands = new commands_1.default("!dimg", client);
 client.on('message', (message) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(message.content);
     yield botCommands.messageHandler(message);
-    console.log("end");
 }));
 client.login(process.env.DISCORDJS_BOT_TOKEN);
 //# sourceMappingURL=index.js.map

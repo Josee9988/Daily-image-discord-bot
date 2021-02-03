@@ -4,8 +4,10 @@ import {Message} from "discord.js";
 
 export default class Commands {
     private albumLink: string;
+    private channelToSpeakIn: string;
 
     constructor(private PREFIX: string, private client: any) {
+        this.channelToSpeakIn = undefined;
     }
 
     async messageHandler(message: Message) {
@@ -19,6 +21,9 @@ export default class Commands {
             switch (CMD_NAME.toLocaleLowerCase()) {
                 case "albumlink":
                     await this.setAlbumLink(message, args);
+                    break;
+                case "channel":
+                    this.setChannel(message, args);
                     break;
                 case "help":
                     this.helpCommand(message);
@@ -78,8 +83,28 @@ For more information please visit *Dialy Image Bot Github repository*: https://g
         const photos: ImageInfo[] | null = await GooglePhotosAlbum.fetchImageUrls(this.albumLink);
         const randomPhoto = Math.floor((Math.random() * Object.keys(photos).length) + 1);
 
-        await message.channel.send("Here's your pic LOL", {files: [photos[randomPhoto].url]});
-        await message.channel.send(photos[randomPhoto].url);
-        await message.channel.send("The photo was taken on the day: **" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
+        if (this.channelToSpeakIn === undefined) { // any channel
+            await message.channel.send("Here's your pic LOL", {files: [photos[randomPhoto].url]});
+            await message.channel.send(photos[randomPhoto].url);
+            await message.channel.send("The photo was taken on the day: **" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
+        } else { // selected channel
+
+            await this.client.channels.cache.get(this.channelToSpeakIn).send("Here's your pic LOL", {files: [photos[randomPhoto].url]});
+            await this.client.channels.cache.get(this.channelToSpeakIn).send(photos[randomPhoto].url);
+            await this.client.channels.cache.get(this.channelToSpeakIn).send("The photo was taken on the day: **" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
+
+        }
+
+
+    }
+
+    private async setChannel(message: Message, args: string[]) {
+        const channelId = await this.client.channels.cache.find((channel: { name: string; }) => channel.name === args[0]).id;
+        if (channelId !== undefined) {
+            await message.channel.send("Dialy Image Bot will now only speak in: " + args);
+            this.channelToSpeakIn = channelId;
+        } else {
+            await message.channel.send(":interrobang:Your channel couldn't be found. Please re-write it again :D");
+        }
     }
 }
