@@ -1,13 +1,31 @@
 import * as GooglePhotosAlbum from 'google-photos-album-image-url-fetch';
 import {ImageInfo} from "google-photos-album-image-url-fetch/dist/imageInfo";
 import {Message} from "discord.js";
+import {CronJob} from 'cron';
+import {helpMessage, infoMessage, sendRandomPhotoMessage} from "./command-messages-data";
+
 
 export default class Commands {
     private albumLink: string;
     private channelToSpeakIn: string;
+    private cronJob: CronJob;
 
     constructor(private PREFIX: string, private client: any) {
         this.channelToSpeakIn = undefined;
+
+        // 30 */12 * * *    (at minute 30 past every 12th hour)
+        this.cronJob = new CronJob('* * * * *', async () => {
+            try {
+                await this.sendRandomPhoto(undefined);
+            } catch (e) {
+                console.error(e);
+            }
+        });
+
+        // Start job
+        if (!this.cronJob.running) {
+            this.cronJob.start();
+        }
     }
 
     async messageHandler(message: Message) {
@@ -59,24 +77,24 @@ export default class Commands {
         this.albumLink = args[0];
         //TODO: save the album link to a database or elsewhere.
         await message.channel.send("Your album has been successfully saved. A new photo will appear every day.");
-        await message.channel.send("But for a sneak peek, here is the first one :D");
+        await message.channel.send("But for a sneak peek, I'll post one in your selected channel!");
         this.sendRandomPhoto(message).catch(r => console.error(r));
     }
 
 
-    private async sendRandomPhoto(message: Message) {
+    private async sendRandomPhoto(message: Message | undefined) {
         if (this.albumLink === null || this.albumLink === undefined || this.albumLink.length < 20) return;
         const photos: ImageInfo[] | null = await GooglePhotosAlbum.fetchImageUrls(this.albumLink);
         const randomPhoto = Math.floor((Math.random() * Object.keys(photos).length) + 1);
 
         if (this.channelToSpeakIn === undefined) { // any channel
-            await message.channel.send("Here's your pic LOL", {files: [photos[randomPhoto].url]});
+            await message.channel.send(sendRandomPhotoMessage.msg1, {files: [photos[randomPhoto].url]});
             await message.channel.send(photos[randomPhoto].url);
-            await message.channel.send("The photo was taken on the day: **" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
+            await message.channel.send(sendRandomPhotoMessage.msg1 + "**" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
         } else { // selected channel
-            await this.client.channels.cache.get(this.channelToSpeakIn).send("Here's your pic LOL", {files: [photos[randomPhoto].url]});
+            await this.client.channels.cache.get(this.channelToSpeakIn).send(sendRandomPhotoMessage.msg1, {files: [photos[randomPhoto].url]});
             await this.client.channels.cache.get(this.channelToSpeakIn).send(photos[randomPhoto].url);
-            await this.client.channels.cache.get(this.channelToSpeakIn).send("The photo was taken on the day: **" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
+            await this.client.channels.cache.get(this.channelToSpeakIn).send(sendRandomPhotoMessage.msg1 + "**" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
         }
     }
 
@@ -91,31 +109,10 @@ export default class Commands {
     }
 
     private helpCommand(message: Message) {
-        message.channel.send(`    -------------------------------------------------------------------------------------
-\`\`\`ini
-[daily Image Bot has been summoned here beep boop bep bep ⚡ ⚡ ]
-\`\`\`   
-**daily Image Bot** :robot:
-The prefix of the bot is: **\`!dimg\`**
-
-**Command list**:fire: :
-**\`help\`** **\`info\`** **\`channel\`** **\`albumlink\`** **\`ping\`** **\`pong\`**
-
-This project is open source, and we will only store the channel id/server id and your album link.
-For more information please visit *daily Image Bot Github repository*: https://github.com/Josee9988/daily-image-discord-bot
-\`\`\`diff
-+ Closing connection with dimg💔 
-\`\`\``)
+        message.channel.send(helpMessage.msg)
     }
 
     private infoCommand(message: any) {
-        message.channel.send(
-            `**dimg info**
-
-**Contact the creator of the bot**:
-LinkedIn: https://www.linkedin.com/in/jose-gracia/
-GitHub: https://github.com/Josee9988
-Email: jgracia9988@gmail.com
-Personal page: http://jgracia.es/`);
+        message.channel.send(infoMessage.msg);
     }
 }
