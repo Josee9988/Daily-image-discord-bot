@@ -1,5 +1,5 @@
 export interface IDimg {
-    serverId: string | null;
-    channelId: string | null;
-    albumLink: string | null;
+    serverId: string;
+    channelId?: string;
+    albumLink?: string;
 }

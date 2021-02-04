@@ -31,4 +31,13 @@ Feel safe🛡️.
 
 ---
 
+## **Built with** 🛠️🔧
+
+- [WebStorm](https://www.jetbrains.com/webstorm/)
+- [Discord.js](https://discord.js.org/#/)
+- [Heroku](https://heroku.com/)
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+
+---
+
 _Made with a lot of ❤️❤️ by **[@Josee9988](https://github.com/Josee9988)**_

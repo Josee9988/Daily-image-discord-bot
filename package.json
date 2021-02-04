@@ -1,7 +1,7 @@
 {
   "name": "daily-image-discord-bot",
   "displayName": "daily Image Bot",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A discord bot that displays a daily image from Google photos",
   "main": "out/index.js",
   "scripts": {
@@ -38,10 +38,10 @@
     "google-photos-album-image-url-fetch": "^2.2.0",
     "mongoose": "^5.11.15",
     "tslint": "^6.1.3",
-    "typescript": "^4.1.3"
+    "typescript": "^4.1.3",
+    "@types/cron": "^1.7.2"
   },
   "devDependencies": {
-    "@types/cron": "^1.7.2",
     "nodemon": "^2.0.7"
   }
 }

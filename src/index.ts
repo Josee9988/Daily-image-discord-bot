@@ -5,13 +5,12 @@ import {Client, Message} from 'discord.js';
 require('dotenv').config();
 
 const databaseController = new DatabaseController();
-const client = new Client();
+const client: Client = new Client();
 const botCommands = new CommandsController("!dimg", client, databaseController)
 
 client.on('message', async (message: Message) => { // message listener
     await botCommands.messageHandler(message);
 });
-
 
 client.on('guildCreate', guild => { // when the bot joins a server
     guild.systemChannel.send("Thanks for inviting me to your awesome server💖, use **`!dimg help`** for more information :D.")

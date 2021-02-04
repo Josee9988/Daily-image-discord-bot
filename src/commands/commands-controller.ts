@@ -6,7 +6,6 @@ import {helpMessage, infoMessage, sendRandomPhotoMessage} from "./command-messag
 import DatabaseController from "../db/database-controller";
 import {IDimg} from "../db/dimg-interface";
 
-
 export default class CommandsController {
     private cronJob: CronJob;
 
@@ -14,14 +13,10 @@ export default class CommandsController {
 
         // 30 */12 * * *    (at minute 30 past every 12th hour)
         this.cronJob = new CronJob('* * * * *', async () => {
-            try {
-                await this.sendRandomPhoto(undefined);
-            } catch (e) {
-                console.error(e);
-            }
+            await this.sendRandomPhoto(undefined).catch((e) => console.error(e));
         });
 
-        // Start job
+        // Start cron job
         if (!this.cronJob.running) {
             this.cronJob.start();
         }
@@ -60,33 +55,7 @@ export default class CommandsController {
         }
     }
 
-    private async setAlbumLink(message: Message, args: string[]) {
-        const server = await this.databaseController.findByServerId(message.guild.id);
-        if (server.channelId) {
-            await this.databaseController.setAlbumLink(message.guild.id, args[0]);
-            await message.channel.send("Your album has been successfully saved. A new photo will appear every day in your selected channel.");
-            await message.channel.send("But for a sneak peek, I'll post one in your selected channel!");
-            this.sendRandomPhoto(message).catch(r => console.error(r));
-        }else { // no channel specified
-            await message.channel.send(":interrobang:Please specify a channel first with `!dimg channel nameOfYourChannel`");
-        }
-    }
-
-
-    private async sendRandomPhoto(message: Message | undefined) {
-        if (message) {
-            let server = await this.databaseController.findByServerId(message.guild.id);
-            await this.sendRandomPhotoCall(server, message);
-        } else { // cron started the job. and we don't have the message available
-            let dimgs = await this.databaseController.findAll();
-            for (const dimg of dimgs) {
-                await this.sendRandomPhotoCall(dimg, undefined);
-            }
-        }
-
-    }
-
-    async sendRandomPhotoCall(dimg: IDimg, message: Message | undefined) {
+    async sendRandomPhotoCall(dimg: IDimg, message?: Message) {
         if (dimg.albumLink === null || dimg.albumLink === undefined || dimg.albumLink.length < 20) return;
         const photos: ImageInfo[] | null = await GooglePhotosAlbum.fetchImageUrls(dimg.albumLink);
         const randomPhoto = Math.floor((Math.random() * Object.keys(photos).length) + 1);
@@ -98,10 +67,33 @@ export default class CommandsController {
         }
     }
 
-    private async setChannel(message: Message, args: string[]) {
+    private async setAlbumLink(message: Message, args: string[]) {
+        const server = await this.databaseController.findByServerId(message.guild.id);
+        if (server.channelId) {
+            await this.databaseController.setAlbumLink(message.guild.id, args[0]);
+            await message.channel.send("Your album has been successfully saved. A new photo will appear every day in your selected channel.");
+            await message.channel.send("But for a sneak peek, I'll post one in your selected channel!");
+            this.sendRandomPhoto(message).catch(r => console.error(r));
+        } else { // no channel specified
+            await message.channel.send(":interrobang:Please specify a channel first with `!dimg channel nameOfYourChannel`");
+        }
+    }
 
+    private async sendRandomPhoto(message?: Message) {
+        if (message) { // if the message exists (it was called from setAlbumLink())
+            let server = await this.databaseController.findByServerId(message.guild.id);
+            await this.sendRandomPhotoCall(server, message);
+        } else { // cron started the job. and we don't have the message available
+            let dimgs = await this.databaseController.findAll();
+            for (const dimg of dimgs) {
+                await this.sendRandomPhotoCall(dimg, undefined);
+            }
+        }
+    }
+
+    private async setChannel(message: Message, args: string[]) {
         const channelId = await this.client.channels.cache.find((channel: { name: string; }) => channel.name === args[0]).id;
-        if (channelId !== undefined) {
+        if (channelId) {
             await this.databaseController.setChannel(message.guild.id, channelId);
             await message.channel.send("daily Image Bot will now only speak in: " + args);
         } else {
