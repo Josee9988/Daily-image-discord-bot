@@ -3,10 +3,10 @@ import {ImageInfo} from "google-photos-album-image-url-fetch/dist/imageInfo";
 import {Message} from "discord.js";
 import {CronJob} from 'cron';
 import {helpMessage, infoMessage, sendRandomPhotoMessage} from "./command-messages-data";
-import DatabaseController from "./db/database-controller";
+import DatabaseController from "../db/database-controller";
 
 
-export default class Commands {
+export default class CommandsController {
     private albumLink: string;
     private channelToSpeakIn: string;
     private cronJob: CronJob;
@@ -64,18 +64,6 @@ export default class Commands {
         }
     }
 
-    private pingCommand(message: any) {
-        message.channel.send(`🏓Latency is **${Date.now() - message.createdTimestamp}**ms. API Latency is **${Math.round(this.client.ws.ping)}**ms`);
-    }
-
-    private pongCommand(message: Message) {
-        message.channel.send(`🏓PING!!!!!!!!!!!!🏓`);
-    }
-
-    private unknownCommand(message: Message) {
-        message.channel.send(":interrobang::interrobang:We couldn't find your command, make sure you typed it correctly.");
-    }
-
     private async setAlbumLink(message: Message, args: string[]) {
         this.albumLink = args[0];
         //TODO: save the album link to a database or elsewhere.
@@ -117,5 +105,17 @@ export default class Commands {
 
     private infoCommand(message: any) {
         message.channel.send(infoMessage.msg);
+    }
+
+    private pingCommand(message: any) {
+        message.channel.send(`🏓Latency is **${Date.now() - message.createdTimestamp}**ms. API Latency is **${Math.round(this.client.ws.ping)}**ms`);
+    }
+
+    private pongCommand(message: Message) {
+        message.channel.send(`🏓PING!!!!!!!!!!!!🏓`);
+    }
+
+    private unknownCommand(message: Message) {
+        message.channel.send(":interrobang::interrobang:We couldn't find your command, make sure you typed it correctly.");
     }
 }

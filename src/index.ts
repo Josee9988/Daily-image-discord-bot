@@ -1,10 +1,9 @@
 require('dotenv').config();
-import Commands from './commands';
-import { Message } from 'discord.js';
+import CommandsController from './commands/commands-controller';
+import {Client, Message} from 'discord.js';
 
-import { Client } from 'discord.js';
 const client = new Client();
-const botCommands = new Commands("!dimg", client)
+const botCommands = new CommandsController("!dimg", client)
 
 client.on('message', async (message: Message) => {
     await botCommands.messageHandler(message);
