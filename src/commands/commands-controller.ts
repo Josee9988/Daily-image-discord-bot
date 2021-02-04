@@ -10,11 +10,10 @@ export default class CommandsController {
     private albumLink: string;
     private channelToSpeakIn: string;
     private cronJob: CronJob;
-    private databaseController;
 
-    constructor(private PREFIX: string, private client: any) {
+    constructor(private PREFIX: string, private client: any, private databaseController: DatabaseController) {
         this.channelToSpeakIn = undefined;
-        this.databaseController = new DatabaseController();
+        //this.databaseController.findByServerId('dasdsadsa');
 
         // 30 */12 * * *    (at minute 30 past every 12th hour)
         this.cronJob = new CronJob('* * * * *', async () => {

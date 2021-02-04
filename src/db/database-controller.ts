@@ -1,9 +1,8 @@
 import {DimgSchemaData} from './dimg-schema';
 import * as mongoose from 'mongoose';
+require('dotenv').config();
 
 const dbUri: string = process.env.MONGO_URI;
-
-
 
 export default class DatabaseController {
 
@@ -11,28 +10,38 @@ export default class DatabaseController {
         mongoose.connect(dbUri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            reconnectTries: 500,
-            reconnectInterval: 100000
         }).catch(error => console.error(error));
     }
 
-    createServerEntity(serverId: string) {
+    async createServerEntity(serverId: string) {
         const newServer = new DimgSchemaData({
             serverId: serverId,
         })
         DimgSchemaData.create(newServer)
-            .then((result) => console.log(result))
             .catch((e) => console.error(e));
     }
 
-    setChannel(serverId: string, channelId: string) {
+    async deleteServerEntity(serverId: string) {
+        DimgSchemaData.deleteOne({serverId: serverId} )
+            .catch((e) => console.error(e));
+    }
+
+    async setChannel(serverId: string, channelId: string) {
         DimgSchemaData.findOneAndUpdate({'serverId': serverId}, {$set: {channelId: channelId}})
             .catch((e) => console.error(e));
     }
 
-    setAlbumLink(serverId: string, albumLink: string) {
+    async setAlbumLink(serverId: string, albumLink: string) {
         DimgSchemaData.findOneAndUpdate({'serverId': serverId}, {$set: {albumLink: albumLink}})
             .catch((e) => console.error(e));
+    }
+
+    async findByServerId(serverId: string) {
+        let rrr;
+        await DimgSchemaData.findOne({serverId: serverId}).then((result) => {
+            rrr = result;
+        });
+        console.log(rrr);
     }
 
 
