@@ -59,7 +59,7 @@ export default class Commands {
         this.albumLink = args[0];
         //TODO: save the album link to a database or elsewhere.
         await message.channel.send("Your album has been successfully saved. A new photo will appear every day.");
-        await message.channel.send("But for a sneak peek, here is one :D");
+        await message.channel.send("But for a sneak peek, here is the first one :D");
         this.sendRandomPhoto(message).catch(r => console.error(r));
     }
 
@@ -83,7 +83,7 @@ export default class Commands {
     private async setChannel(message: Message, args: string[]) {
         const channelId = await this.client.channels.cache.find((channel: { name: string; }) => channel.name === args[0]).id;
         if (channelId !== undefined) {
-            await message.channel.send("Dialy Image Bot will now only speak in: " + args);
+            await message.channel.send("daily Image Bot will now only speak in: " + args);
             this.channelToSpeakIn = channelId;
         } else {
             await message.channel.send(":interrobang:Your channel couldn't be found. Please re-write it again :D");
@@ -93,15 +93,15 @@ export default class Commands {
     private helpCommand(message: Message) {
         message.channel.send(`    -------------------------------------------------------------------------------------
 \`\`\`ini
-[Dialy Image Bot has been summoned here beep boop bep bep ⚡ ⚡ ]
+[daily Image Bot has been summoned here beep boop bep bep ⚡ ⚡ ]
 \`\`\`   
-**Dialy Image Bot** :robot:
+**daily Image Bot** :robot:
 The prefix of the bot is: **\`!dimg\`**
 
 **Command list**:fire: :
 **\`help\`** **\`info\`** **\`channel\`** **\`albumlink\`** **\`ping\`** **\`pong\`**
 
-For more information please visit *Dialy Image Bot Github repository*: https://github.com/Josee9988/Dialy-image-discord-bot
+For more information please visit *daily Image Bot Github repository*: https://github.com/Josee9988/daily-image-discord-bot
 \`\`\`diff
 + Closing connection with dimg💔 
 \`\`\``)
