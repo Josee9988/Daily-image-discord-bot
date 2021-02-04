@@ -13,7 +13,7 @@ export default class DatabaseController {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
-            useFindAndModify: true
+            useFindAndModify: false
         }).catch(error => console.error(error));
     }
 

@@ -61,10 +61,15 @@ export default class CommandsController {
     }
 
     private async setAlbumLink(message: Message, args: string[]) {
-        await this.databaseController.setAlbumLink(message.guild.id, args[0]);
-        await message.channel.send("Your album has been successfully saved. A new photo will appear every day.");
-        await message.channel.send("But for a sneak peek, I'll post one in your selected channel!");
-        this.sendRandomPhoto(message).catch(r => console.error(r));
+        const server = await this.databaseController.findByServerId(message.guild.id);
+        if (server.channelId) {
+            await this.databaseController.setAlbumLink(message.guild.id, args[0]);
+            await message.channel.send("Your album has been successfully saved. A new photo will appear every day in your selected channel.");
+            await message.channel.send("But for a sneak peek, I'll post one in your selected channel!");
+            this.sendRandomPhoto(message).catch(r => console.error(r));
+        }else { // no channel specified
+            await message.channel.send(":interrobang:Please specify a channel first with `!dimg channel nameOfYourChannel`");
+        }
     }
 
 
@@ -72,28 +77,24 @@ export default class CommandsController {
         if (message) {
             let server = await this.databaseController.findByServerId(message.guild.id);
             await this.sendRandomPhotoCall(server, message);
-        } else { // cron started the job. we don't have message available
-            let servers = await this.databaseController.findAll();
-            for (const dimg of servers) {
-                await this.sendRandomPhotoCall(dimg, message);
+        } else { // cron started the job. and we don't have the message available
+            let dimgs = await this.databaseController.findAll();
+            for (const dimg of dimgs) {
+                await this.sendRandomPhotoCall(dimg, undefined);
             }
         }
 
     }
 
-    async sendRandomPhotoCall(dimg: IDimg, message: Message) {
+    async sendRandomPhotoCall(dimg: IDimg, message: Message | undefined) {
         if (dimg.albumLink === null || dimg.albumLink === undefined || dimg.albumLink.length < 20) return;
         const photos: ImageInfo[] | null = await GooglePhotosAlbum.fetchImageUrls(dimg.albumLink);
         const randomPhoto = Math.floor((Math.random() * Object.keys(photos).length) + 1);
 
-        if (dimg.channelId === undefined) { // any channel
-            await message.channel.send(sendRandomPhotoMessage.msg1, {files: [photos[randomPhoto].url]});
-            await message.channel.send(photos[randomPhoto].url);
-            await message.channel.send(sendRandomPhotoMessage.msg1 + "**" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
-        } else { // selected channel
+        if (dimg.channelId !== undefined) { // channel specified
             await this.client.channels.cache.get(dimg.channelId).send(sendRandomPhotoMessage.msg1, {files: [photos[randomPhoto].url]});
             await this.client.channels.cache.get(dimg.channelId).send(photos[randomPhoto].url);
-            await this.client.channels.cache.get(dimg.channelId).send(sendRandomPhotoMessage.msg1 + "**" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
+            await this.client.channels.cache.get(dimg.channelId).send(sendRandomPhotoMessage.msg2 + "**" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
         }
     }
 
