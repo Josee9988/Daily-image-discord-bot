@@ -22,12 +22,21 @@ Feel safe🛡️.
 
 1. **`help`** -> Displays the command list and the prefix.
 2. **`channel <nameOfYourChannel>`** -> This command tells the bot where to send the images. Make sure the bot has
-   access to that channel tho.
+   access and write permissions in that channel tho.
 3. **`albumlink <linkOfYourPublicGooglePhotosAlbum>`** ->  This command tells the bot the link of your public Google
    Photos album.
 4. **`info`** -> Useful links (documentation/ owner contact).
 5. **`ping`** -> Displays bot latency and API latency.
 6. **`pong`** -> Replies ping🤪.
+
+---
+
+## **Built with** 🛠️🔧
+
+- [WebStorm](https://www.jetbrains.com/webstorm/)
+- [Discord.js](https://discord.js.org/#/)
+- [Heroku](https://heroku.com/)
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 
 ---
 
