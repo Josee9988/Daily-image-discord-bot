@@ -3,6 +3,7 @@ import {ImageInfo} from "google-photos-album-image-url-fetch/dist/imageInfo";
 import {Message} from "discord.js";
 import {CronJob} from 'cron';
 import {helpMessage, infoMessage, sendRandomPhotoMessage} from "./command-messages-data";
+import DatabaseController from "./db/database-controller";
 
 
 export default class Commands {
@@ -12,6 +13,8 @@ export default class Commands {
 
     constructor(private PREFIX: string, private client: any) {
         this.channelToSpeakIn = undefined;
+        const databaseController = new DatabaseController();
+        databaseController.createServerConnection('dasdsadsa');
 
         // 30 */12 * * *    (at minute 30 past every 12th hour)
         this.cronJob = new CronJob('* * * * *', async () => {
