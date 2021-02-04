@@ -23,4 +23,15 @@ client.on("guildDelete", function (guild) { // when the bot leaves a server
     databaseController.deleteServerEntity(guild.id);
 });
 
+client.on("ready", () => {
+    client.user.setStatus("online");
+    client.user.setPresence({
+        activity: {
+            name: "!dimg help",
+            type: 'COMPETING',
+            url: 'https://github.com/Josee9988/Daily-image-discord-bot'
+        }
+    })
+})
+
 client.login(process.env.DISCORDJS_BOT_TOKEN);

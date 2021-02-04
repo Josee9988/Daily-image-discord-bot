@@ -7,13 +7,9 @@ import DatabaseController from "../db/database-controller";
 
 
 export default class CommandsController {
-    private albumLink: string;
-    private channelToSpeakIn: string;
     private cronJob: CronJob;
 
     constructor(private PREFIX: string, private client: any, private databaseController: DatabaseController) {
-        this.channelToSpeakIn = undefined;
-        //this.databaseController.findByServerId('dasdsadsa');
 
         // 30 */12 * * *    (at minute 30 past every 12th hour)
         this.cronJob = new CronJob('* * * * *', async () => {
@@ -64,8 +60,7 @@ export default class CommandsController {
     }
 
     private async setAlbumLink(message: Message, args: string[]) {
-        this.albumLink = args[0];
-        //TODO: save the album link to a database or elsewhere.
+        await this.databaseController.setAlbumLink(message.guild.id, args[0]);
         await message.channel.send("Your album has been successfully saved. A new photo will appear every day.");
         await message.channel.send("But for a sneak peek, I'll post one in your selected channel!");
         this.sendRandomPhoto(message).catch(r => console.error(r));
@@ -73,26 +68,29 @@ export default class CommandsController {
 
 
     private async sendRandomPhoto(message: Message | undefined) {
-        if (this.albumLink === null || this.albumLink === undefined || this.albumLink.length < 20) return;
-        const photos: ImageInfo[] | null = await GooglePhotosAlbum.fetchImageUrls(this.albumLink);
+        let server = await this.databaseController.findByServerId(message.guild.id);
+            
+        if (server.albumLink === null || server.albumLink === undefined || server.albumLink.length < 20) return;
+        const photos: ImageInfo[] | null = await GooglePhotosAlbum.fetchImageUrls(server.albumLink);
         const randomPhoto = Math.floor((Math.random() * Object.keys(photos).length) + 1);
 
-        if (this.channelToSpeakIn === undefined) { // any channel
+        if (server.channelId === undefined) { // any channel
             await message.channel.send(sendRandomPhotoMessage.msg1, {files: [photos[randomPhoto].url]});
             await message.channel.send(photos[randomPhoto].url);
             await message.channel.send(sendRandomPhotoMessage.msg1 + "**" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
         } else { // selected channel
-            await this.client.channels.cache.get(this.channelToSpeakIn).send(sendRandomPhotoMessage.msg1, {files: [photos[randomPhoto].url]});
-            await this.client.channels.cache.get(this.channelToSpeakIn).send(photos[randomPhoto].url);
-            await this.client.channels.cache.get(this.channelToSpeakIn).send(sendRandomPhotoMessage.msg1 + "**" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
+            await this.client.channels.cache.get(server.channelId).send(sendRandomPhotoMessage.msg1, {files: [photos[randomPhoto].url]});
+            await this.client.channels.cache.get(server.channelId).send(photos[randomPhoto].url);
+            await this.client.channels.cache.get(server.channelId).send(sendRandomPhotoMessage.msg1 + "**" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
         }
     }
 
     private async setChannel(message: Message, args: string[]) {
+
         const channelId = await this.client.channels.cache.find((channel: { name: string; }) => channel.name === args[0]).id;
         if (channelId !== undefined) {
+            await this.databaseController.setChannel(message.guild.id, channelId);
             await message.channel.send("daily Image Bot will now only speak in: " + args);
-            this.channelToSpeakIn = channelId;
         } else {
             await message.channel.send(":interrobang:Your channel couldn't be found. Please re-write it again :D");
         }

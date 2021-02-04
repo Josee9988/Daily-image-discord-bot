@@ -1,5 +1,7 @@
 import {DimgSchemaData} from './dimg-schema';
 import * as mongoose from 'mongoose';
+import {IDimg} from "./dimg-interface";
+
 require('dotenv').config();
 
 const dbUri: string = process.env.MONGO_URI;
@@ -10,6 +12,7 @@ export default class DatabaseController {
         mongoose.connect(dbUri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
+            useCreateIndex: true,
         }).catch(error => console.error(error));
     }
 
@@ -36,12 +39,12 @@ export default class DatabaseController {
             .catch((e) => console.error(e));
     }
 
-    async findByServerId(serverId: string) {
-        let rrr;
+    async findByServerId(serverId: string): Promise<IDimg> {
+        let serverFound = null;
         await DimgSchemaData.findOne({serverId: serverId}).then((result) => {
-            rrr = result;
+            serverFound = result;
         });
-        console.log(rrr);
+        return serverFound;
     }
 
 
