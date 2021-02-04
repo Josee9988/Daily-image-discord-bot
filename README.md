@@ -10,9 +10,10 @@ Feel safe🛡️.
 
 1. [Add the bot to your server🤖](https://discord.com/oauth2/authorize?client_id=806274731245436960&permissions=3072&scope=bot
 )
-2. Use `!dimg channel nameOfYourChannel` to specify the channel where **dimg** will post the photos.
-3. Use `!dimg albumlink linkOfYourPublicGooglePhotosAlbum` to let the bot know where to find your photos.
-4. Enjoy. Every 12 hours a new random photo from your public GPhotos album will suddenly appear in your desired channel!
+2. Make sure the bot has permissions to write in the channel you selected or in the channel you use the commands.   
+3. Use `!dimg channel nameOfYourChannel` to specify the channel where **dimg** will post the photos.
+4. Use `!dimg albumlink linkOfYourPublicGooglePhotosAlbum` to let the bot know where to find your photos.
+5. Enjoy. Every 12 hours a new random photo from your public GPhotos album will suddenly appear in your desired channel!
 
 ---
 

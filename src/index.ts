@@ -13,9 +13,11 @@ client.on('message', async (message: Message) => { // message listener
 });
 
 client.on('guildCreate', guild => { // when the bot joins a server
-    guild.systemChannel.send("Thanks for inviting me to your awesome server💖, use **`!dimg help`** for more information :D.")
     databaseController.createServerEntity(guild.id)
         .then(() => guild.systemChannel.send("We have successfully created an entry point for your server."));
+    guild.systemChannel.send("Thanks for inviting me to your awesome server💖, use **`!dimg help`** for more information :D.")
+        .catch(() => console.log("Couldn't send welcome message."));
+
 });
 
 client.on("guildDelete", function (guild) { // when the bot leaves a server

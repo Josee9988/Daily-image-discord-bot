@@ -102,22 +102,25 @@ export default class CommandsController {
     }
 
     private helpCommand(message: Message) {
-        message.channel.send(helpMessage.msg)
+        message.channel.send(helpMessage.msg).catch(() => console.log("Couldn't send help command message."));
     }
 
     private infoCommand(message: any) {
-        message.channel.send(infoMessage.msg);
+        message.channel.send(infoMessage.msg).catch(() => console.log("Couldn't send info command message."));
     }
 
     private pingCommand(message: any) {
-        message.channel.send(`🏓Latency is **${Date.now() - message.createdTimestamp}**ms. API Latency is **${Math.round(this.client.ws.ping)}**ms`);
+        message.channel.send(`🏓Latency is **${Date.now() - message.createdTimestamp}**ms. API Latency is **${Math.round(this.client.ws.ping)}**ms`)
+            .catch(() => console.log("Couldn't send ping command message."));
     }
 
     private pongCommand(message: Message) {
-        message.channel.send(`🏓PING!!!!!!!!!!!!🏓`);
+        message.channel.send(`🏓PING!!!!!!!!!!!!🏓`)
+            .catch(() => console.log("Couldn't send pong command message."));
     }
 
     private unknownCommand(message: Message) {
-        message.channel.send(":interrobang::interrobang:We couldn't find your command, make sure you typed it correctly.");
+        message.channel.send(":interrobang::interrobang:We couldn't find your command, make sure you typed it correctly.")
+            .catch(() => console.log("Couldn't send unknown command message."));
     }
 }
