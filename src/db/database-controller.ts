@@ -13,7 +13,24 @@ export default class DatabaseController {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
+            useFindAndModify: true
         }).catch(error => console.error(error));
+    }
+
+    async findAll(): Promise<IDimg[]> {
+        let serversFound = null;
+        await DimgSchemaData.find().then((result) => {
+            serversFound = result;
+        });
+        return serversFound;
+    }
+
+    async findByServerId(serverId: string): Promise<IDimg> {
+        let serverFound = null;
+        await DimgSchemaData.findOne({serverId: serverId}).then((result) => {
+            serverFound = result;
+        });
+        return serverFound;
     }
 
     async createServerEntity(serverId: string) {
@@ -37,14 +54,6 @@ export default class DatabaseController {
     async setAlbumLink(serverId: string, albumLink: string) {
         DimgSchemaData.findOneAndUpdate({'serverId': serverId}, {$set: {albumLink: albumLink}})
             .catch((e) => console.error(e));
-    }
-
-    async findByServerId(serverId: string): Promise<IDimg> {
-        let serverFound = null;
-        await DimgSchemaData.findOne({serverId: serverId}).then((result) => {
-            serverFound = result;
-        });
-        return serverFound;
     }
 
 

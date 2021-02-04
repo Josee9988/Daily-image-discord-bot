@@ -4,6 +4,7 @@ import {Message} from "discord.js";
 import {CronJob} from 'cron';
 import {helpMessage, infoMessage, sendRandomPhotoMessage} from "./command-messages-data";
 import DatabaseController from "../db/database-controller";
+import {IDimg} from "../db/dimg-interface";
 
 
 export default class CommandsController {
@@ -68,20 +69,31 @@ export default class CommandsController {
 
 
     private async sendRandomPhoto(message: Message | undefined) {
-        let server = await this.databaseController.findByServerId(message.guild.id);
-            
-        if (server.albumLink === null || server.albumLink === undefined || server.albumLink.length < 20) return;
-        const photos: ImageInfo[] | null = await GooglePhotosAlbum.fetchImageUrls(server.albumLink);
+        if (message) {
+            let server = await this.databaseController.findByServerId(message.guild.id);
+            await this.sendRandomPhotoCall(server, message);
+        } else { // cron started the job. we don't have message available
+            let servers = await this.databaseController.findAll();
+            for (const dimg of servers) {
+                await this.sendRandomPhotoCall(dimg, message);
+            }
+        }
+
+    }
+
+    async sendRandomPhotoCall(dimg: IDimg, message: Message) {
+        if (dimg.albumLink === null || dimg.albumLink === undefined || dimg.albumLink.length < 20) return;
+        const photos: ImageInfo[] | null = await GooglePhotosAlbum.fetchImageUrls(dimg.albumLink);
         const randomPhoto = Math.floor((Math.random() * Object.keys(photos).length) + 1);
 
-        if (server.channelId === undefined) { // any channel
+        if (dimg.channelId === undefined) { // any channel
             await message.channel.send(sendRandomPhotoMessage.msg1, {files: [photos[randomPhoto].url]});
             await message.channel.send(photos[randomPhoto].url);
             await message.channel.send(sendRandomPhotoMessage.msg1 + "**" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
         } else { // selected channel
-            await this.client.channels.cache.get(server.channelId).send(sendRandomPhotoMessage.msg1, {files: [photos[randomPhoto].url]});
-            await this.client.channels.cache.get(server.channelId).send(photos[randomPhoto].url);
-            await this.client.channels.cache.get(server.channelId).send(sendRandomPhotoMessage.msg1 + "**" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
+            await this.client.channels.cache.get(dimg.channelId).send(sendRandomPhotoMessage.msg1, {files: [photos[randomPhoto].url]});
+            await this.client.channels.cache.get(dimg.channelId).send(photos[randomPhoto].url);
+            await this.client.channels.cache.get(dimg.channelId).send(sendRandomPhotoMessage.msg1 + "**" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
         }
     }
 
