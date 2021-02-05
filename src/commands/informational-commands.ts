@@ -20,6 +20,7 @@ export function infoCommand(message: Message): void {
 /**
  * Ping command, triggered by "!dimg ping".
  * @param message the message received that triggered the command.
+ * @param ping the API latency ping number.
  */
 export function pingCommand(message: Message, ping: number): void {
     const msgToBeSend = `🏓Latency is **${Date.now() - message.createdTimestamp}**ms. API Latency is **${Math.round(ping)}**ms`

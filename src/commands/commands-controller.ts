@@ -7,6 +7,7 @@ import DatabaseController from "../db/database-controller";
 import {IDimg} from "../db/dimg-interface";
 import {helpCommand, infoCommand, pingCommand, pongCommand, unknownCommand} from "./informational-commands";
 
+// noinspection SpellCheckingInspection
 export default class CommandsController {
     private cronJob: CronJob;
 
@@ -23,7 +24,7 @@ export default class CommandsController {
         }
     }
 
-    async messageHandler(message: Message) {
+    async messageHandler(message: Message): Promise<void> {
         if (message.author.bot) return; //ignores bot messages
         if (message.content.startsWith(this.PREFIX)) {
             const [CMD_NAME, ...args] = message.content
@@ -56,19 +57,23 @@ export default class CommandsController {
         }
     }
 
-    async sendRandomPhotoCall(dimg: IDimg, message?: Message) {
+    async sendRandomPhotoCall(dimg: IDimg): Promise<void> {
         if (dimg.albumLink === null || dimg.albumLink === undefined || dimg.albumLink.length < 20) return;
         const photos: ImageInfo[] | null = await GooglePhotosAlbum.fetchImageUrls(dimg.albumLink);
         const randomPhoto = Math.floor((Math.random() * Object.keys(photos).length) + 1);
 
-        if (dimg.channelId !== undefined) { // channel specified
-            await this.client.channels.cache.get(dimg.channelId).send(sendRandomPhotoMessage.msg1, {files: [photos[randomPhoto].url]});
-            await this.client.channels.cache.get(dimg.channelId).send(photos[randomPhoto].url);
-            await this.client.channels.cache.get(dimg.channelId).send(sendRandomPhotoMessage.msg2 + "**" + new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString() + "**");
+        if (dimg.channelId) { // channel specified
+            await this.client.channels.cache.get(dimg.channelId)
+                .send(sendRandomPhotoMessage.msg1, {files: [photos[randomPhoto].url]});
+            await this.client.channels.cache.get(dimg.channelId)
+                .send(photos[randomPhoto].url);
+            await this.client.channels.cache.get(dimg.channelId)
+                .send(sendRandomPhotoMessage.msg2 + "**" + new Date(photos[randomPhoto].imageUpdateDate)
+                    .toLocaleDateString() + "**");
         }
     }
 
-    private async setAlbumLink(message: Message, args: string[]) {
+    private async setAlbumLink(message: Message, args: string[]): Promise<void> {
         if (!this.checkIfUserIsAdmin(message)) return;
         const server = await this.databaseController.findByServerId(message.guild.id);
         if (server.channelId) {
@@ -81,19 +86,19 @@ export default class CommandsController {
         }
     }
 
-    private async sendRandomPhoto(message?: Message) {
+    private async sendRandomPhoto(message?: Message): Promise<void> {
         if (message) { // if the message exists (it was called from setAlbumLink())
             let server = await this.databaseController.findByServerId(message.guild.id);
-            await this.sendRandomPhotoCall(server, message);
+            await this.sendRandomPhotoCall(server);
         } else { // cron started the job. and we don't have the message available
             let dimgs = await this.databaseController.findAll();
             for (const dimg of dimgs) {
-                await this.sendRandomPhotoCall(dimg, undefined);
+                await this.sendRandomPhotoCall(dimg);
             }
         }
     }
 
-    private async setChannel(message: Message, args: string[]) {
+    private async setChannel(message: Message, args: string[]): Promise<void> {
         if (!this.checkIfUserIsAdmin(message)) return;
         const channelId = await this.client.channels.cache.find((channel: { name: string; }) => channel.name === args[0]).id;
         if (channelId) {
@@ -115,7 +120,8 @@ export default class CommandsController {
         if (message.member.hasPermission("ADMINISTRATOR")) {
             return true;
         } else {
-            message.reply(':interrobang:This command can only be executed by an **administrator**!')
+            const msgToBeSend = ':interrobang:This command can only be executed by an **administrator**!';
+            message.reply(msgToBeSend).catch((e) => permissionErrorHandler(msgToBeSend, e));
             return false;
         }
     }
