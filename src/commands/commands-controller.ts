@@ -12,7 +12,6 @@ export default class CommandsController {
     private cronJob: CronJob;
 
     constructor(private PREFIX: string, private client: any, private databaseController: DatabaseController) {
-
         // 30 */12 * * *    (at minute 30 past every 12th hour) * * * * * for every minute (testing purposes)
         this.cronJob = new CronJob('30 */12 * * *', async () => {
             await this.sendRandomPhoto().catch((e) => console.error(e));
@@ -24,6 +23,10 @@ export default class CommandsController {
         }
     }
 
+    /**
+     * Function that processes all the messages and redirects to the command methods if the message starts with "!dimg"
+     * @param message any message typed in by the user.
+     */
     async messageHandler(message: Message): Promise<void> {
         if (message.author.bot) return; //ignores bot messages
         if (message.content.startsWith(this.PREFIX)) {
@@ -51,7 +54,7 @@ export default class CommandsController {
                 case "pong":
                     pongCommand(message);
                     break;
-                default:
+                default: // command unknown
                     unknownCommand(message);
             }
         }

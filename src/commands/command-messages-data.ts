@@ -1,4 +1,4 @@
-export const helpMessage =
+export const helpMessage = // Message for the command "help"
     {
         msg: `    -------------------------------------------------------------------------------------
 \`\`\`ini
@@ -17,7 +17,7 @@ For more information please visit *daily Image Bot Github repository*: https://g
 \`\`\``
     };
 
-export const infoMessage =
+export const infoMessage = // Message for the command "info"
     {
         msg: `**dimg info**
 
@@ -29,7 +29,7 @@ Personal page: http://jgracia.es/`
     };
 
 
-export const sendRandomPhotoMessage =
+export const sendRandomPhotoMessage = // Message for the function sendRandomPhoto (called by the cron)
     {
         msg1: "Here's your pic LOL",
         msg2: "The photo was taken on the day: "
