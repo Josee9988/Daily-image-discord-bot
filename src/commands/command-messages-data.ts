@@ -10,8 +10,8 @@ The prefix of the bot is: **\`!dimg\`**
 **Command list**:fire: :
 **\`help\`** **\`info\`** **\`channel\`** **\`albumlink\`** **\`ping\`** **\`pong\`**
 
-This project is open source, and we will only store the channel id/server id and your album link.
-For more information please visit *daily Image Bot Github repository*: https://github.com/Josee9988/daily-image-discord-bot
+This project is **open source**, and we will only store the channel-id/server-id and your public album link for basic usability of the bot.
+For more information please visit *Daily Image Bot Github repository*: https://github.com/Josee9988/daily-image-discord-bot
 \`\`\`diff
 + Closing connection with dimg💔 
 \`\`\``
@@ -27,7 +27,6 @@ GitHub: https://github.com/Josee9988
 Email: jgracia9988@gmail.com
 Personal page: http://jgracia.es/`
     };
-
 
 export const sendRandomPhotoMessage = // Message for the function sendRandomPhoto (called by the cron)
     {
