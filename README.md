@@ -1,11 +1,16 @@
 # **Daily Image Discord Bot**
 
-A simple bot that let you send daily random images from any public google photos
-album. **[🤖](https://discord.com/oauth2/authorize?client_id=806274731245436960&permissions=3072&scope=bot
-)**
-This bot was made for fun purposes, "*dimg*" does not collect unnecessary data or sell anything to third parties. Feel
-safe🛡️.
+<p align="center">
+   <a href="https://discord.com/oauth2/authorize?client_id=806274731245436960&permissions=3072&scope=bot">
+     <img src="https://i.imgur.com/gZgo0no.png">
+   </a>
+</p>
 
+A simple bot that let you send **daily random images** from any *public google photos
+album*. **[🤖](https://discord.com/oauth2/authorize?client_id=806274731245436960&permissions=3072&scope=bot
+)**
+This bot was made for fun purposes, "*dimg*" does **not** collect unnecessary data or sell anything to third parties. Feel
+safe🛡️.
 
 ---
 
