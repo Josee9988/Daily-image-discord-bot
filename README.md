@@ -15,9 +15,10 @@ safe🛡️.
    )**
 2. Make sure the bot has permissions to write in the channel you selected or on the channel you are using to talk with
    the bot.
-3. Use `!dimg channel nameOfYourChannel` to specify the channel where **dimg** will post the photos.
-4. Use `!dimg albumlink linkOfYourPublicGooglePhotosAlbum` to let the bot know where to find your photos.
-5. Enjoy. Every 12 hours a new random photo from your public GPhotos album will suddenly appear in your desired channel!
+3. The only users that are allowed to use the installation commands are the **users** with **admin permissions**.   
+4. Use `!dimg channel nameOfYourChannel` to specify the channel where **dimg** will post the photos.
+5. Use `!dimg albumlink linkOfYourPublicGooglePhotosAlbum` to let the bot know where to find your photos.
+6. Enjoy. Every 12 hours a new random photo from your public GPhotos album will suddenly appear in your desired channel!
 
 ---
 
