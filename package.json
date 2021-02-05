@@ -10,7 +10,7 @@
     "watch:compile": "tsc -watch",
     "build": "tsc",
     "tsc": "tsc",
-    "heroku-prebuild": "npm install",
+    "heroku-prebuild": "npm install --production=false",
     "heroku-postbuild": "npm run build",
     "heroku-cleanup": "rm -rfv src/"
   },
