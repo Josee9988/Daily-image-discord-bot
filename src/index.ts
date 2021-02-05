@@ -10,10 +10,13 @@ const databaseController = new DatabaseController();
 const client: Client = new Client();
 const botCommands = new CommandsController("!dimg", client, databaseController)
 
+// Event listener message. When any message is sent, the bot will process it.
 client.on('message', async (message: Message) => { // message listener
     await botCommands.messageHandler(message);
 });
 
+// event listener "guildCreate".
+// It will create in the database a document with the server id.
 client.on('guildCreate', guild => { // when the bot joins a server
     databaseController.createServerEntity(guild.id)
         .then(() => guild.systemChannel.send("We have successfully created an entry point for your server."));
@@ -22,19 +25,25 @@ client.on('guildCreate', guild => { // when the bot joins a server
 
 });
 
-client.on("guildDelete", function (guild) { // when the bot leaves a server
-    databaseController.deleteServerEntity(guild.id);
+// event listener "guildDelete".
+// It will remove from the database all the data from the server if the bot got kicked out/leaves a server.
+client.on("guildDelete", (guild) => { // when the bot leaves a server remove it's document
+    databaseController.deleteServerEntity(guild.id)
+        .catch(r => console.error('We couldn\'t delete server entity, Error: ' + r));
 });
 
+// event listener "ready". It will set the bot status and bot presence.
 client.on("ready", () => {
-    client.user.setStatus("online");
+    client.user.setStatus("online").catch(r => console.error('We couldn\'t set bot status, Error: ' + r));
     client.user.setPresence({
         activity: {
             name: "!dimg help",
             type: 'COMPETING',
             url: 'https://github.com/Josee9988/Daily-image-discord-bot'
         }
-    })
+    }).catch(r => console.error('We couldn\'t set bot presence, Error: ' + r));
 })
 
-client.login(process.env.DISCORDJS_BOT_TOKEN);
+// Authenticates the bot using the env variable "DISCORDJS_BOT_TOKEN", then the bot will be online and available
+client.login(process.env.DISCORDJS_BOT_TOKEN)
+    .catch(r => console.error('CRITICAL ERROR: We couldn\'t login the bot, Error: ' + r));
