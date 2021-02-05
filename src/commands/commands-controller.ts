@@ -68,6 +68,7 @@ export default class CommandsController {
     }
 
     private async setAlbumLink(message: Message, args: string[]) {
+        if (!this.checkIfUserIsAdmin(message)) return;
         const server = await this.databaseController.findByServerId(message.guild.id);
         if (server.channelId) {
             await this.databaseController.setAlbumLink(message.guild.id, args[0]);
@@ -92,6 +93,7 @@ export default class CommandsController {
     }
 
     private async setChannel(message: Message, args: string[]) {
+        if (!this.checkIfUserIsAdmin(message)) return;
         const channelId = await this.client.channels.cache.find((channel: { name: string; }) => channel.name === args[0]).id;
         if (channelId) {
             await this.databaseController.setChannel(message.guild.id, channelId);
@@ -122,5 +124,21 @@ export default class CommandsController {
     private unknownCommand(message: Message) {
         message.channel.send(":interrobang::interrobang:We couldn't find your command, make sure you typed it correctly.")
             .catch(() => console.log("Couldn't send unknown command message."));
+    }
+
+    /**
+     * Function that checks if the user that send the message(command) is admin,
+     * if not, it will return false and reply with further instructions.
+     *
+     * @param message the message with the command
+     * @return boolean true|false True if the user is admin, otherwise false.
+     */
+    private checkIfUserIsAdmin(message: Message): boolean {
+        if (message.member.hasPermission("ADMINISTRATOR")) {
+            return true;
+        } else {
+            message.reply(':interrobang:This command can only be executed by an **administrator**!')
+            return false;
+        }
     }
 }

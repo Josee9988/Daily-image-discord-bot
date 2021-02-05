@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## [**1.1.0**] - 2021-02-05
+
+### Added
+
+* The set channel and set albumlink commands now can only be performed by server admins, to increase security and avoid.
+
 ## [**1.0.1**] - 2021-02-05
 
 ### Improved
