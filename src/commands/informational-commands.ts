@@ -1,26 +1,48 @@
 import {Message} from "discord.js";
 import {helpMessage, infoMessage} from "./command-messages-data";
 
-
-export function helpCommand(message: Message) {
-    message.channel.send(helpMessage.msg).catch(() => console.log("Couldn't send help command message."));
+/**
+ * Help command, triggered by "!dimg help".
+ * @param message the message received that triggered the command.
+ */
+export function helpCommand(message: Message): void {
+    message.channel.send(helpMessage.msg).catch((e) => permissionErrorHandler(helpMessage.msg, e));
 }
 
-export function infoCommand(message: Message) {
-    message.channel.send(infoMessage.msg).catch(() => console.log("Couldn't send info command message."));
+/**
+ * Info command, triggered by "!dimg info".
+ * @param message the message received that triggered the command.
+ */
+export function infoCommand(message: Message): void {
+    message.channel.send(infoMessage.msg).catch((e) => permissionErrorHandler(infoMessage.msg, e));
 }
 
-export function pingCommand(message: Message, ping:number) {
-    message.channel.send(`🏓Latency is **${Date.now() - message.createdTimestamp}**ms. API Latency is **${Math.round(ping)}**ms`)
-        .catch(() => console.log("Couldn't send ping command message."));
+/**
+ * Ping command, triggered by "!dimg ping".
+ * @param message the message received that triggered the command.
+ */
+export function pingCommand(message: Message, ping: number): void {
+    const msgToBeSend = `🏓Latency is **${Date.now() - message.createdTimestamp}**ms. API Latency is **${Math.round(ping)}**ms`
+    message.channel.send(msgToBeSend)
+        .catch((e) => permissionErrorHandler(msgToBeSend, e));
 }
 
-export function pongCommand(message: Message) {
-    message.channel.send(`🏓PING!!!!!!!!!!!!🏓`)
-        .catch(() => console.log("Couldn't send pong command message."));
+/**
+ * Pong command, triggered by "!dimg pong".
+ * @param message the message received that triggered the command.
+ */
+export function pongCommand(message: Message): void {
+    const msgToBeSend = `🏓PING!!!!!!!!!!!!🏓`;
+    message.channel.send(msgToBeSend)
+        .catch((e) => permissionErrorHandler(msgToBeSend, e));
 }
 
+/**
+ * Unknown command, triggered by "!dimg ???????".
+ * @param message the message received that triggered the command.
+ */
 export function unknownCommand(message: Message) {
-    message.channel.send(":interrobang::interrobang:We couldn't find your command, make sure you typed it correctly.")
-        .catch(() => console.log("Couldn't send unknown command message."));
+    const msgToBeSend = ":interrobang::interrobang:We couldn't find your command, make sure you typed it correctly.";
+    message.channel.send(msgToBeSend)
+        .catch((e) => permissionErrorHandler(msgToBeSend, e));
 }
