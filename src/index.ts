@@ -4,6 +4,8 @@ import {Client, Message} from 'discord.js';
 
 require('dotenv').config();
 
+process.env.NODE_ENV = "production";
+
 const databaseController = new DatabaseController();
 const client: Client = new Client();
 const botCommands = new CommandsController("!dimg", client, databaseController)
