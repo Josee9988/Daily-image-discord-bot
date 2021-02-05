@@ -1,8 +1,8 @@
 {
   "name": "daily-image-discord-bot",
-  "displayName": "daily Image Bot",
-  "version": "1.1.0",
-  "description": "A discord bot that displays a daily image from Google photos",
+  "displayName": "Daily Image Bot",
+  "version": "1.1.1",
+  "description": "A discord bot that sends a daily image from a Google photos album, right to your selected discord channel",
   "main": "out/index.js",
   "scripts": {
     "start": "node ./out/index.js",
