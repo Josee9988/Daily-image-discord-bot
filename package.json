@@ -5,12 +5,12 @@
   "description": "A discord bot that displays a daily image from Google photos",
   "main": "out/index.js",
   "scripts": {
-    "start": "npm run build && node ./out/index.js",
+    "start": "node ./out/index.js",
     "watch:start": "nodemon ./out/index.js",
     "watch:compile": "tsc -watch",
     "build": "tsc",
     "tsc": "tsc",
-    "postinstall": "npm run tsc",
+    "postinstall": "npm run build",
     "heroku-prebuild": "npm install --production=false",
     "heroku-cleanup": "rm -rfv src/"
   },
