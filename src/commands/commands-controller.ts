@@ -2,9 +2,10 @@ import * as GooglePhotosAlbum from 'google-photos-album-image-url-fetch';
 import {ImageInfo} from "google-photos-album-image-url-fetch/dist/imageInfo";
 import {Message} from "discord.js";
 import {CronJob} from 'cron';
-import {helpMessage, infoMessage, sendRandomPhotoMessage} from "./command-messages-data";
+import {sendRandomPhotoMessage} from "./command-messages-data";
 import DatabaseController from "../db/database-controller";
 import {IDimg} from "../db/dimg-interface";
+import {helpCommand, infoCommand, pingCommand, pongCommand, unknownCommand} from "./informational-commands";
 
 export default class CommandsController {
     private cronJob: CronJob;
@@ -38,19 +39,19 @@ export default class CommandsController {
                     await this.setChannel(message, args);
                     break;
                 case "help":
-                    this.helpCommand(message);
+                    helpCommand(message);
                     break;
                 case "info":
-                    this.infoCommand(message);
+                    infoCommand(message);
                     break;
                 case "ping":
-                    this.pingCommand(message);
+                    pingCommand(message, this.client.ws.ping);
                     break;
                 case "pong":
-                    this.pongCommand(message);
+                    pongCommand(message);
                     break;
                 default:
-                    this.unknownCommand(message);
+                    unknownCommand(message);
             }
         }
     }
@@ -101,29 +102,6 @@ export default class CommandsController {
         } else {
             await message.channel.send(":interrobang:Your channel couldn't be found. Please re-write it again :D");
         }
-    }
-
-    private helpCommand(message: Message) {
-        message.channel.send(helpMessage.msg).catch(() => console.log("Couldn't send help command message."));
-    }
-
-    private infoCommand(message: any) {
-        message.channel.send(infoMessage.msg).catch(() => console.log("Couldn't send info command message."));
-    }
-
-    private pingCommand(message: any) {
-        message.channel.send(`🏓Latency is **${Date.now() - message.createdTimestamp}**ms. API Latency is **${Math.round(this.client.ws.ping)}**ms`)
-            .catch(() => console.log("Couldn't send ping command message."));
-    }
-
-    private pongCommand(message: Message) {
-        message.channel.send(`🏓PING!!!!!!!!!!!!🏓`)
-            .catch(() => console.log("Couldn't send pong command message."));
-    }
-
-    private unknownCommand(message: Message) {
-        message.channel.send(":interrobang::interrobang:We couldn't find your command, make sure you typed it correctly.")
-            .catch(() => console.log("Couldn't send unknown command message."));
     }
 
     /**
