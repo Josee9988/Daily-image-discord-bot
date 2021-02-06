@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## [**1.1.2**] - 2021-02-06
+
+### Added
+
+* TypeScript tslib to reduce bundle size.
+* TypeScript variable annotations.
+
+### Improved
+
+* Code style and structure (a bit of refactoring).
+
+### Changed
+
+* Build command will now remove the out/ folder first, and then build it back.
+
+### Removed
+
+* .map files in the out/ folder.
+
 ## [**1.1.1**] - 2021-02-05
 
 ### Added

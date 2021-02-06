@@ -41,7 +41,7 @@ export default class DatabaseController {
      * Creates a document only with the server id.
      * @param serverId the id of the server.
      */
-    async createServerEntity(serverId: string) {
+    async createServerEntity(serverId: string): Promise<void> {
         const newServer = new DimgSchemaData({
             serverId: serverId,
         })
@@ -53,7 +53,7 @@ export default class DatabaseController {
      * Deletes the document with the server id given.
      * @param serverId the id of the server.
      */
-    async deleteServerEntity(serverId: string) {
+    async deleteServerEntity(serverId: string): Promise<void> {
         DimgSchemaData.deleteOne({serverId: serverId})
             .catch((e: any) => console.error(e));
     }
@@ -63,7 +63,7 @@ export default class DatabaseController {
      * @param serverId the id of the server.
      * @param channelId the channel to be set/updated.
      */
-    async setChannel(serverId: string, channelId: string) {
+    async setChannel(serverId: string, channelId: string): Promise<void> {
         DimgSchemaData.findOneAndUpdate({'serverId': serverId}, {$set: {channelId: channelId}})
             .catch((e: any) => console.error(e));
     }
@@ -73,7 +73,7 @@ export default class DatabaseController {
      * @param serverId the id of the server.
      * @param albumLink the link of the album to be set/updated.
      */
-    async setAlbumLink(serverId: string, albumLink: string) {
+    async setAlbumLink(serverId: string, albumLink: string): Promise<void> {
         DimgSchemaData.findOneAndUpdate({'serverId': serverId}, {$set: {albumLink: albumLink}})
             .catch((e: any) => console.error(e));
     }

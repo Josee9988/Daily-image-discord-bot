@@ -42,7 +42,7 @@ export function pongCommand(message: Message): void {
  * Unknown command, triggered by "!dimg ???????".
  * @param message the message received that triggered the command.
  */
-export function unknownCommand(message: Message) {
+export function unknownCommand(message: Message): void {
     const msgToBeSend = ":interrobang::interrobang:We couldn't find your command, make sure you typed it correctly.";
     message.channel.send(msgToBeSend)
         .catch((e) => permissionErrorHandler(msgToBeSend, e));
