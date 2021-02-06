@@ -14,7 +14,7 @@ export default class CommandsController {
     constructor(private PREFIX: string, private client: any, private databaseController: DatabaseController) {
         // 30 */12 * * *    (at minute 30 past every 12th hour) * * * * * for every minute (testing purposes)
         this.cronJob = new CronJob('30 */12 * * *', async () =>
-            await this.sendRandomPhoto().catch((e) => console.error(e)));
+            await this.sendRandomPhoto().catch((e: any) => console.error(e)));
 
         // Start cron job
         if (!this.cronJob.running) {
@@ -71,7 +71,7 @@ export default class CommandsController {
             await this.databaseController.setAlbumLink(message.guild.id, albumToBeSet[0]);
             await message.channel.send("Your album has been successfully saved. A new photo will appear every day in your selected channel.");
             await message.channel.send("But for a sneak peek, I'll post one in your selected channel!");
-            this.sendRandomPhoto(message).catch(r => console.error(r));
+            this.sendRandomPhoto(message).catch((e: any) => console.error(e));
         } else { // no channel specified
             await message.channel.send(":interrobang:Please specify a channel first with `!dimg channel nameOfYourChannel`");
         }

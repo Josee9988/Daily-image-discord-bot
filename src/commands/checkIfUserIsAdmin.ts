@@ -12,7 +12,7 @@ export default function checkIfUserIsAdmin(message: Message): boolean {
         return true;
     } else {
         const msgToBeSend = ':interrobang:This command can only be executed by an **administrator**!';
-        message.reply(msgToBeSend).catch((e) => permissionErrorHandler(msgToBeSend, e));
+        message.reply(msgToBeSend).catch((e: any) => permissionErrorHandler(msgToBeSend, e));
         return false;
     }
 }

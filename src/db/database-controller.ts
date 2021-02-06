@@ -11,7 +11,7 @@ export default class DatabaseController {
             useUnifiedTopology: true,
             useCreateIndex: true,
             useFindAndModify: false
-        }).catch(e => console.error(`Couldn't connect to MongoDB, ERROR: ${e}`));
+        }).catch((e: any) => console.error(`Couldn't connect to MongoDB, ERROR: ${e}`));
     }
 
     /**
@@ -46,7 +46,7 @@ export default class DatabaseController {
             serverId: serverId,
         })
         DimgSchemaData.create(newServer)
-            .catch((e) => console.error(e));
+            .catch((e: any) => console.error(e));
     }
 
     /**
@@ -55,7 +55,7 @@ export default class DatabaseController {
      */
     async deleteServerEntity(serverId: string) {
         DimgSchemaData.deleteOne({serverId: serverId})
-            .catch((e) => console.error(e));
+            .catch((e: any) => console.error(e));
     }
 
     /**
@@ -65,7 +65,7 @@ export default class DatabaseController {
      */
     async setChannel(serverId: string, channelId: string) {
         DimgSchemaData.findOneAndUpdate({'serverId': serverId}, {$set: {channelId: channelId}})
-            .catch((e) => console.error(e));
+            .catch((e: any) => console.error(e));
     }
 
     /**
@@ -75,6 +75,6 @@ export default class DatabaseController {
      */
     async setAlbumLink(serverId: string, albumLink: string) {
         DimgSchemaData.findOneAndUpdate({'serverId': serverId}, {$set: {albumLink: albumLink}})
-            .catch((e) => console.error(e));
+            .catch((e: any) => console.error(e));
     }
 }
