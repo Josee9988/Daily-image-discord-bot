@@ -13,9 +13,8 @@ export default class CommandsController {
 
     constructor(private PREFIX: string, private client: any, private databaseController: DatabaseController) {
         // 30 */12 * * *    (at minute 30 past every 12th hour) * * * * * for every minute (testing purposes)
-        this.cronJob = new CronJob('30 */12 * * *', async () => {
-            await this.sendRandomPhoto().catch((e) => console.error(e));
-        });
+        this.cronJob = new CronJob('30 */12 * * *', async () =>
+            await this.sendRandomPhoto().catch((e) => console.error(e)));
 
         // Start cron job
         if (!this.cronJob.running) {
@@ -86,10 +85,10 @@ export default class CommandsController {
     private async setChannel(message: Message, channelToBeSet: string[]): Promise<void> {
         if (!checkIfUserIsAdmin(message)) return;
         const channelId = await this.client.channels.cache.find(
-            (channel: { name: string; }) => channel.name === channelToBeSet[0]).id;
-        if (channelId) {
-            await this.databaseController.setChannel(message.guild.id, channelId);
-            await message.channel.send("daily Image Bot will now only speak in: " + channelToBeSet);
+            (channel: { name: string; }) => channel.name === channelToBeSet[0]);
+        if (channelId && channelId.id) {
+            await this.databaseController.setChannel(message.guild.id, channelId.id);
+            await message.channel.send("Daily Image Bot will now only speak in: " + channelToBeSet);
         } else {
             await message.channel.send(":interrobang:Your channel couldn't be found. Please re-write it again :D");
         }
