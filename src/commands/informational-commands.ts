@@ -6,7 +6,7 @@ import {helpMessage, infoMessage} from "./command-messages-data";
  * @param message the message received that triggered the command.
  */
 export function helpCommand(message: Message): void {
-    message.channel.send(helpMessage.msg).catch((e) => permissionErrorHandler(helpMessage.msg, e));
+    message.channel.send(helpMessage.msg).catch((e: any) => permissionErrorHandler(helpMessage.msg, e));
 }
 
 /**
@@ -14,7 +14,7 @@ export function helpCommand(message: Message): void {
  * @param message the message received that triggered the command.
  */
 export function infoCommand(message: Message): void {
-    message.channel.send(infoMessage.msg).catch((e) => permissionErrorHandler(infoMessage.msg, e));
+    message.channel.send(infoMessage.msg).catch((e: any) => permissionErrorHandler(infoMessage.msg, e));
 }
 
 /**
@@ -25,7 +25,7 @@ export function infoCommand(message: Message): void {
 export function pingCommand(message: Message, ping: number): void {
     const msgToBeSend = `🏓Latency is **${Date.now() - message.createdTimestamp}**ms. API Latency is **${Math.round(ping)}**ms`
     message.channel.send(msgToBeSend)
-        .catch((e) => permissionErrorHandler(msgToBeSend, e));
+        .catch((e: any) => permissionErrorHandler(msgToBeSend, e));
 }
 
 /**
@@ -35,14 +35,14 @@ export function pingCommand(message: Message, ping: number): void {
 export function pongCommand(message: Message): void {
     const msgToBeSend = `🏓PING!!!!!!!!!!!!🏓`;
     message.channel.send(msgToBeSend)
-        .catch((e) => permissionErrorHandler(msgToBeSend, e));
+        .catch((e: any) => permissionErrorHandler(msgToBeSend, e));
 }
 
 /**
  * Unknown command, triggered by "!dimg ???????".
  * @param message the message received that triggered the command.
  */
-export function unknownCommand(message: Message) {
+export function unknownCommand(message: Message): void {
     const msgToBeSend = ":interrobang::interrobang:We couldn't find your command, make sure you typed it correctly.";
     message.channel.send(msgToBeSend)
         .catch((e) => permissionErrorHandler(msgToBeSend, e));
