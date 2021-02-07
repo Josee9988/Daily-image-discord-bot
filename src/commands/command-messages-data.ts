@@ -33,3 +33,30 @@ export const sendRandomPhotoMessage = // Message for the function sendRandomPhot
         msg1: "Here's your pic LOL",
         msg2: "The photo was taken on the day: "
     };
+
+export const welcomeOwnerPrivatelyMessage = // Message for the function welcomeOwnerPrivately
+    {
+        msg: `Hi server owner: :grinning:
+
+Thanks for choosing **Daily Image Bot** for your server.
+Please make sure you check our simple documentation and our quick installation guide at: *https://github.com/Josee9988/Daily-image-discord-bot#daily-image-discord-bot*. After you set up the bot, it will send a random photo every 12h.
+
+
+To save you time here is a super simplified **installation guide**. :gear:
+1. \`!dimg channel nameOfYourChannel\` to select the channel where the images will be sent.
+2. \`!dimg albumlink linkOfYourPublicGooglePhotosAlbum\` to specify the bot the link of the public google photos album.
+3 (extra). \`!dimg now\` to force the bot to publish a photo now. (this command must be sent in the selected channel).
+
+**Security** :shield:
+- This bot is fully **open-source** and **free**, and we only store the minimum information for the good performing of the bot (server id, channel id and album link), so you can feel safe with us. You can also check our code repository in case you wanted to contribute to the development or fix/notify any possible bug.
+- The commands \`!dimg channel\`, \`!dimg albumlink\` and \`!dimg now\` can only be executed by the server administrators (to avoid server trolls).
+
+
+If you wanted to **contact the owner of the bot**: :e_mail:
+LinkedIn: https://www.linkedin.com/in/jose-gracia/
+GitHub: https://github.com/Josee9988
+Donations: https://paypal.me/josee9988
+Email: jgracia9988@gmail.com
+
+Thanks, and enjoy!!!`
+    };

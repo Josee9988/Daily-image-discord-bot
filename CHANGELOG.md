@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## [**1.1.4**] - 2021-02-07
+
+### Added
+
+* !dimg now can only be executed by an administrator.
+* When the bot joins a new server it sends a DM to the server owner.
+
 ## [**1.1.3**] - 2021-02-07
 
 ### Added
