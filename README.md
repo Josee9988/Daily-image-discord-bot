@@ -6,18 +6,16 @@
    </a>
 </p>
 
-A simple bot that let you send **daily random images** from any *public google photos
-album*. **[🤖](https://discord.com/oauth2/authorize?client_id=806274731245436960&permissions=3072&scope=bot
-)**
-This bot was made for fun purposes, "*dimg*" does **not** collect unnecessary data or sell anything to third parties. Feel
-safe🛡️.
+A simple bot that let you send **daily random images** from any *public google photos album*
+. **[🤖](https://discord.com/oauth2/authorize?client_id=806274731245436960&scope=bot&permissions=52224)**
+This bot was made for fun purposes, "*dimg*" does **not** collect unnecessary data or sell anything to third parties.
+Feel safe🛡️.
 
 ---
 
 ## **Installation**
 
-1. **[Add the bot to your server🤖](https://discord.com/oauth2/authorize?client_id=806274731245436960&permissions=3072&scope=bot
-   )**
+1. **[Add the bot to your server🤖](https://discord.com/oauth2/authorize?client_id=806274731245436960&scope=bot&permissions=52224)**
 2. Make sure the bot has permissions to write in the channel you selected or on the channel you are using to talk with
    the bot.
 3. The only users that are allowed to use the installation commands are the **users** with **admin permissions**.   
