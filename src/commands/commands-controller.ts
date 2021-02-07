@@ -105,19 +105,26 @@ export default class CommandsController {
     private async sendRandomPhoto(forceChannelToBeTheSame: boolean, message?: Message): Promise<void> {
         if (message) { // if the message exists (it was called from setAlbumLink() or !dimg now command)
             let server = await this.databaseController.findByServerId(message.guild.id);
-            if (forceChannelToBeTheSame) { // if we want the channel of the caller to be the same as the DB. (!dimg now)
-                if (server.channelId == message.guild.id) {
+            if (server.albumLink && server.channelId) { // if the parameters are found and everything is ok
+
+                if (forceChannelToBeTheSame) { // if we want the channel of the caller to be the same as the DB. (!dimg now)
+                    if (server.channelId == message.guild.id) {
+                        await this.fetchAndSendPhoto(server);
+                    } else { // if the caller channel isn't the same show error
+                        await message.channel.send(
+                            ":interrobang:To use this command, talk in the previously selected channel");
+                    }
+                } else { // if it is called from setAlbumLink to display the 1st photo, after the !dimg albumlink
                     await this.fetchAndSendPhoto(server);
-                } else { // if the caller channel isn't the same show error
-                    await message.channel.send(
-                        ":interrobang:To use this command, talk in the previously selected channel");
                 }
-            } else { // if it is called from setAlbumLink to display the 1st photo, after the !dimg albumlink
-                await this.fetchAndSendPhoto(server);
+            } else { // albumlink or channel id aren't set
+                await message.channel.send(
+                    ":interrobang:To use this command, specify fisrt the channel and the albumlink." +
+                    "Use the commands `!dimg channel nameOfYourChannel` and then `!dimg albumlink nameOfYourLink`");
             }
         } else { // CRON started the job. and we don't have the message available
             let dimgs = await this.databaseController.findAll();
-            for (const dimg of dimgs) {
+            for (const dimg of dimgs) { // iterate over every document and send the photos to every respective server
                 await this.fetchAndSendPhoto(dimg);
             }
         }
