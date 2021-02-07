@@ -108,7 +108,7 @@ export default class CommandsController {
             if (server.albumLink && server.channelId) { // if the parameters are found and everything is ok
 
                 if (forceChannelToBeTheSame) { // if we want the channel of the caller to be the same as the DB. (!dimg now)
-                    if (server.channelId == message.guild.id) {
+                    if (server.channelId == message.channel.id) {
                         await this.fetchAndSendPhoto(server);
                     } else { // if the caller channel isn't the same show error
                         await message.channel.send(
@@ -119,7 +119,7 @@ export default class CommandsController {
                 }
             } else { // albumlink or channel id aren't set
                 await message.channel.send(
-                    ":interrobang:To use this command, specify fisrt the channel and the albumlink." +
+                    ":interrobang:To use this command, specify first the channel and the albumlink." +
                     "Use the commands `!dimg channel nameOfYourChannel` and then `!dimg albumlink nameOfYourLink`");
             }
         } else { // CRON started the job. and we don't have the message available
