@@ -34,18 +34,21 @@ Feel safe🛡️.
    access and write permissions in that channel tho.
 3. **`albumlink <linkOfYourPublicGooglePhotosAlbum>`** ->  This command tells the bot the link of your public Google
    Photos album.
-4. **`info`** -> Useful links (documentation/ owner contact).
-5. **`ping`** -> Displays bot latency and API latency.
-6. **`pong`** -> Replies ping🤪.
+4. **`now`** -> If channel and albumlink are set, and you are typing the message from the specified channel, then it will
+   force a photo to appear just now (it will not break the cron schedule, just forces an extra photo to appear now).
+5. **`info`** -> Useful links (documentation/ owner contact).
+6. **`ping`** -> Displays bot latency and API latency.
+7. **`pong`** -> Replies ping🤪.
 
 ---
 
 ## **Built with** 🛠️🔧
 
-- [WebStorm](https://www.jetbrains.com/webstorm/)
+- [Node.js](https://nodejs.org/en/)
+- [npm](https://www.npmjs.com/)
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 - [Discord.js](https://discord.js.org/#/)
 - [Heroku](https://heroku.com/)
-- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 
 ---
 

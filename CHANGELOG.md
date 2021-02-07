@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## [**1.1.3**] - 2021-02-07
+
+### Added
+
+* Now command, to force a photo to appear now.
+
 ## [**1.1.2**] - 2021-02-06
 
 ### Added
