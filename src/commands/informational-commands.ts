@@ -1,5 +1,5 @@
-import {Message} from "discord.js";
-import {helpMessage, infoMessage} from "./command-messages-data";
+import {Message, User} from "discord.js";
+import {helpMessage, infoMessage, welcomeOwnerPrivatelyMessage} from "./command-messages-data";
 
 /**
  * Help command, triggered by "!dimg help".
@@ -46,4 +46,13 @@ export function unknownCommand(message: Message): void {
     const msgToBeSend = ":interrobang::interrobang:We couldn't find your command, make sure you typed it correctly.";
     message.channel.send(msgToBeSend)
         .catch((e) => permissionErrorHandler(msgToBeSend, e));
+}
+
+/**
+ * When the bot is added to a new server, it will send a DM to the server owner.
+ * @param owner the owner of the server
+ */
+export function welcomeOwnerPrivately(owner: User): void {
+    owner.send(welcomeOwnerPrivatelyMessage.msg)
+        .then((e: any) => console.error(('Couldn\'t send a welcome DM message to the owner, ERROR:' + e)));
 }

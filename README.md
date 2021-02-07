@@ -40,6 +40,8 @@ Feel safe🛡️.
 6. **`ping`** -> Displays bot latency and API latency.
 7. **`pong`** -> Replies ping🤪.
 
+- The commands `!dimg channel`, `!dimg albumlink` and `!dimg now` can only be executed by the server administrators (to avoid server trolls).
+
 ---
 
 ## **Built with** 🛠️🔧

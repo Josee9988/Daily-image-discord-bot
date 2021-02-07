@@ -1,6 +1,7 @@
 import DatabaseController from "./db/database-controller";
 import CommandsController from './commands/commands-controller';
-import {Client, Message} from 'discord.js';
+import {Client, Guild, Message, User} from 'discord.js';
+import {welcomeOwnerPrivately} from "./commands/informational-commands";
 
 require('dotenv').config();
 
@@ -23,11 +24,19 @@ client.on('guildCreate', (guild: any) => { // when the bot joins a server
     guild.systemChannel.send("Thanks for inviting me to your awesome server💖, use **`!dimg help`** for more information :D.")
         .catch(() => console.log("Couldn't send welcome message."));
 
+    // send a private message to the owner of the server.
+    guild.cache.map((guildReceived: any) => {
+        client.users.fetch(guildReceived.owner).then((owner: User) => {
+            welcomeOwnerPrivately(owner);
+        })
+    })
+
+
 });
 
 // event listener "guildDelete".
 // It will remove from the database all the data from the server if the bot got kicked out/leaves a server.
-client.on("guildDelete", (guild: any) => { // when the bot leaves a server remove it's document
+client.on("guildDelete", (guild: Guild) => { // when the bot leaves a server remove it's document
     databaseController.deleteServerEntity(guild.id)
         .catch((e: any) => console.error('We couldn\'t delete server entity, Error: ' + e));
 });

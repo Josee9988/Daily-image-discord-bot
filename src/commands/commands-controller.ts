@@ -108,6 +108,7 @@ export default class CommandsController {
             if (server.albumLink && server.channelId) { // if the parameters are found and everything is ok
 
                 if (forceChannelToBeTheSame) { // if we want the channel of the caller to be the same as the DB. (!dimg now)
+                    if (!checkIfUserIsAdmin(message)) return;
                     if (server.channelId == message.channel.id) {
                         await this.fetchAndSendPhoto(server);
                     } else { // if the caller channel isn't the same show error
