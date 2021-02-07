@@ -14,7 +14,7 @@ export default class CommandsController {
     constructor(private PREFIX: string, private client: any, private databaseController: DatabaseController) {
         // 30 */12 * * *    (at minute 30 past every 12th hour) * * * * * for every minute (testing purposes)
         this.cronJob = new CronJob('30 */12 * * *', async () =>
-            await this.sendRandomPhoto().catch((e: any) => console.error(e)));
+            await this.sendRandomPhoto(false).catch((e: any) => console.error(e)));
 
         // Start cron job
         if (!this.cronJob.running) {
@@ -40,6 +40,9 @@ export default class CommandsController {
                     break;
                 case "channel":
                     await this.setChannel(message, args);
+                    break;
+                case "now":
+                    await this.sendRandomPhoto(true, message);
                     break;
                 case "help":
                     helpCommand(message);
@@ -71,7 +74,7 @@ export default class CommandsController {
             await this.databaseController.setAlbumLink(message.guild.id, albumToBeSet[0]);
             await message.channel.send("Your album has been successfully saved. A new photo will appear every day in your selected channel.");
             await message.channel.send("But for a sneak peek, I'll post one in your selected channel!");
-            this.sendRandomPhoto(message).catch((e: any) => console.error(e));
+            this.sendRandomPhoto(false, message).catch((e: any) => console.error(e));
         } else { // no channel specified
             await message.channel.send(":interrobang:Please specify a channel first with `!dimg channel nameOfYourChannel`");
         }
@@ -97,12 +100,22 @@ export default class CommandsController {
     /**
      * Check makes the calls to send a random photo to the specified channel
      * @param message the message that called it
+     * @param forceChannelToBeTheSame if the message has to be sent from the same channel that the photos goes in.
      */
-    private async sendRandomPhoto(message?: Message): Promise<void> {
-        if (message) { // if the message exists (it was called from setAlbumLink())
+    private async sendRandomPhoto(forceChannelToBeTheSame: boolean, message?: Message): Promise<void> {
+        if (message) { // if the message exists (it was called from setAlbumLink() or !dimg now command)
             let server = await this.databaseController.findByServerId(message.guild.id);
-            await this.fetchAndSendPhoto(server);
-        } else { // cron started the job. and we don't have the message available
+            if (forceChannelToBeTheSame) { // if we want the channel of the caller to be the same as the DB. (!dimg now)
+                if (server.channelId == message.guild.id) {
+                    await this.fetchAndSendPhoto(server);
+                } else { // if the caller channel isn't the same show error
+                    await message.channel.send(
+                        ":interrobang:To use this command, talk in the previously selected channel");
+                }
+            } else { // if it is called from setAlbumLink to display the 1st photo, after the !dimg albumlink
+                await this.fetchAndSendPhoto(server);
+            }
+        } else { // CRON started the job. and we don't have the message available
             let dimgs = await this.databaseController.findAll();
             for (const dimg of dimgs) {
                 await this.fetchAndSendPhoto(dimg);
