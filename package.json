@@ -8,7 +8,7 @@
     "start": "node ./out/index.js",
     "watch:start": "nodemon ./out/index.js",
     "watch:compile": "tsc -watch",
-    "build": "npm run node-modules-prod-install && rm -rf out/ && tsc",
+    "build": "rm -rf out/ && tsc && npm run node-modules-prod-install",
     "build:dev": "rm -rf out/ && tsc",
     "node-modules-prod-install": "rm -rf node_modules/ && npm install --production=true",
     "tsc": "tsc",
