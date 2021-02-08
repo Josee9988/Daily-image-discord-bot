@@ -1,15 +1,15 @@
 {
   "name": "daily-image-discord-bot",
   "displayName": "Daily Image Bot",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "A discord bot that sends a daily image from a Google photos album, right to your selected discord channel",
   "main": "out/index.js",
   "scripts": {
     "start": "node ./out/index.js",
     "watch:start": "nodemon ./out/index.js",
     "watch:compile": "tsc -watch",
-    "build": "rm -rf out/ && tsc && npm run node-modules-prod-install",
-    "build:dev": "rm -rf out/ && tsc",
+    "build": "rm -rfv out/ && tsc && npm run node-modules-prod-install",
+    "build:dev": "rm -rfv out/ && tsc",
     "node-modules-prod-install": "rm -rf node_modules/ && npm install --production=true",
     "tsc": "tsc",
     "cleanup": "rm -rfv src/",
