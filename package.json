@@ -12,7 +12,8 @@
     "node-modules-prod-install": "npm run build && rm -rf node_modules/ && npm install --production=true && npm run cleanup",
     "tsc": "tsc",
     "cleanup": "rm -rfv src/",
-    "heroku-prebuild": "npm install --production=false"
+    "heroku-prebuild": "npm install --production=false",
+    "heroku-cleanup": "npm run node-modules-prod-install"
   },
   "repository": {
     "type": "git",
