@@ -8,12 +8,13 @@
     "start": "node ./out/index.js",
     "watch:start": "nodemon ./out/index.js",
     "watch:compile": "tsc -watch",
-    "build": "rm -rf out/ && tsc",
-    "node-modules-prod-install": "npm run build && rm -rf node_modules/ && npm install --production=true && npm run cleanup",
+    "build": "npm run node-modules-prod-install && rm -rf out/ && tsc",
+    "build:dev": "rm -rf out/ && tsc",
+    "node-modules-prod-install": "rm -rf node_modules/ && npm install --production=true",
     "tsc": "tsc",
     "cleanup": "rm -rfv src/",
     "heroku-prebuild": "npm install --production=false",
-    "heroku-cleanup": "npm run node-modules-prod-install"
+    "heroku-cleanup": "npm run cleanup"
   },
   "repository": {
     "type": "git",
