@@ -9,9 +9,8 @@
     "watch:start": "nodemon ./out/index.js",
     "watch:compile": "tsc -watch",
     "build": "rm -rf out/ && tsc",
-    "node-modules-prod-install": "rm -rf node_modules/ && npm install --production=true",
+    "node-modules-prod-install": "npm run build && rm -rf node_modules/ && npm install --production=true",
     "tsc": "tsc",
-    "postinstall": "npm run build",
     "heroku-prebuild": "npm install --production=false",
     "heroku-cleanup": "rm -rfv src/"
   },
