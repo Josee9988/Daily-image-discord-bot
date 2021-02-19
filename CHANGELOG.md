@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## [**1.1.6**] - 2021-02-19
+
+### Added
+
+* Database status in the *ping* command.
+
 ## [**1.1.5**] - 2021-02-08
 
 ### Improved

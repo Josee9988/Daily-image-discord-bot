@@ -25,17 +25,42 @@ export function infoCommand(message: Message): void {
  */
 export async function pingCommand(message: Message, ping: number): Promise<void> {
     const latency = Date.now() - message.createdTimestamp;
-    const apiLatency = Math.round(ping);
-    const databasePing = connection.db.admin().ping(function (err, result) {
-        if (err || !result) return (err || new Error('*unknown ping*'));
-        return ping;
-    });
+    const mongoDbConnectionStatus: string = await obtainDBStatus();
+
     const msgToBeSend =
         `🏓Latency is **${latency}** ms.
-    API latency is **${apiLatency}** ms.
-    Database latency is: **${databasePing}** ms.`
+    API latency is **${Math.round(ping)}** ms.
+    Database status is: **${mongoDbConnectionStatus}**.`
     message.channel.send(msgToBeSend)
         .catch((e: any) => permissionErrorHandler(msgToBeSend, e));
+}
+
+/**
+ * Obtains the database connection status
+ */
+async function obtainDBStatus(): Promise<string> {
+    let receivedStatus: number = -1;
+    await new Promise((resolve, reject) => {
+        connection.db.admin().ping((err, result: any) => {
+            if (err || !result) (reject(err))
+            resolve(result);
+        })
+    }).then((result: any) => receivedStatus = result.ok).catch((e: any) => receivedStatus = e.ok);
+
+    let mongoDbConnectionStatus: any;
+    switch (receivedStatus) {
+        case 0:
+            mongoDbConnectionStatus = 'disconnected';
+            break;
+        case 1:
+        case 2:
+            mongoDbConnectionStatus = 'connected';
+            break;
+        default:
+            mongoDbConnectionStatus = 'failing';
+            break;
+    }
+    return mongoDbConnectionStatus;
 }
 
 /**
