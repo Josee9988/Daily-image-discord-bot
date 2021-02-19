@@ -21,13 +21,19 @@ export function infoCommand(message: Message): void {
 /**
  * Ping command, triggered by "!dimg ping".
  * @param message the message received that triggered the command.
- * @param ping the API latency ping number.
+ * @param ping the API latency, database and main latency ping ms.
  */
 export async function pingCommand(message: Message, ping: number): Promise<void> {
+    const latency = Date.now() - message.createdTimestamp;
+    const apiLatency = Math.round(ping);
+    const databasePing = connection.db.admin().ping(function (err, result) {
+        if (err || !result) return (err || new Error('*unknown ping*'));
+        return ping;
+    });
     const msgToBeSend =
-        `🏓Latency is **${Date.now() - message.createdTimestamp}** ms.
-    API latency is **${Math.round(ping)}** ms.
-    Database latency is: **${await connection.db.admin().ping()}** ms.`
+        `🏓Latency is **${latency}** ms.
+    API latency is **${apiLatency}** ms.
+    Database latency is: **${databasePing}** ms.`
     message.channel.send(msgToBeSend)
         .catch((e: any) => permissionErrorHandler(msgToBeSend, e));
 }
