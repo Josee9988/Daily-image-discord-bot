@@ -1,5 +1,6 @@
 import {Message} from "discord.js";
 import {helpMessage, infoMessage} from "./command-messages-data";
+import {connection} from "mongoose";
 
 /**
  * Help command, triggered by "!dimg help".
@@ -22,8 +23,11 @@ export function infoCommand(message: Message): void {
  * @param message the message received that triggered the command.
  * @param ping the API latency ping number.
  */
-export function pingCommand(message: Message, ping: number): void {
-    const msgToBeSend = `🏓Latency is **${Date.now() - message.createdTimestamp}**ms. API Latency is **${Math.round(ping)}**ms`
+export async function pingCommand(message: Message, ping: number): Promise<void> {
+    const msgToBeSend =
+        `🏓Latency is **${Date.now() - message.createdTimestamp}** ms.
+    API latency is **${Math.round(ping)}** ms.
+    Database latency is: **${await connection.db.admin().ping()}** ms.`
     message.channel.send(msgToBeSend)
         .catch((e: any) => permissionErrorHandler(msgToBeSend, e));
 }
