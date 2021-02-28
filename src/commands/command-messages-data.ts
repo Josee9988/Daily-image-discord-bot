@@ -23,9 +23,12 @@ export const infoMessage = // Message for the command "info"
 
 **Contact the creator of the bot**:
 LinkedIn: https://www.linkedin.com/in/jose-gracia/
-GitHub: https://github.com/Josee9988
+Owner's GitHub: https://github.com/Josee9988/
 Email: jgracia9988@gmail.com
-Personal page: http://jgracia.es/`
+Personal page: http://jgracia.es/
+
+**Bot's repository**: https://github.com/Josee9988/Daily-image-discord-bot/
+**Report any issues at:**: https://github.com/Josee9988/Daily-image-discord-bot/issues/`
     };
 
 export const sendRandomPhotoMessage = // Message for the function sendRandomPhoto (called by the cron)
@@ -55,6 +58,9 @@ LinkedIn: https://www.linkedin.com/in/jose-gracia/
 GitHub: https://github.com/Josee9988
 Donations: https://paypal.me/josee9988
 Email: jgracia9988@gmail.com
+
+**Bot's repository**: https://github.com/Josee9988/Daily-image-discord-bot/
+**Report any issues at:**: https://github.com/Josee9988/Daily-image-discord-bot/issues/
 
 Thanks, and enjoy!!!`
     };
