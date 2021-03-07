@@ -69,6 +69,18 @@ export default class DatabaseController {
     }
 
     /**
+     * Counts the number of documents in the database and return that number.
+     */
+    async countDocuments(): Promise<number> {
+        let docCount = 0;
+        DimgSchemaData.countDocuments().then((num: number) => {
+            docCount = num;
+        });
+        return docCount;
+    }
+
+
+    /**
      * Sets/updates an album link from an element with the server id given.
      * @param serverId the id of the server.
      * @param albumLink the link of the album to be set/updated.

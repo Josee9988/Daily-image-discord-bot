@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## [**1.1.7**] - 2021-03-07
+
+### Added
+
+* Number of servers using the bot in the info command.
+
 ## [**1.1.6**] - 2021-02-19
 
 ### Added
