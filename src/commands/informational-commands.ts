@@ -13,9 +13,12 @@ export function helpCommand(message: Message): void {
 /**
  * Info command, triggered by "!dimg info".
  * @param message the message received that triggered the command.
+ * @param documentCount number of documents found in the DB
  */
-export function infoCommand(message: Message): void {
+export function infoCommand(message: Message, documentCount: number): void {
     message.channel.send(infoMessage.msg).catch((e: any) => permissionErrorHandler(infoMessage.msg, e));
+    message.channel.send(infoMessage.msg).catch((e: any) => permissionErrorHandler(
+        "There are currently: \"**" + documentCount + "**\" happy servers using Daily image bot :)", e));
 }
 
 /**

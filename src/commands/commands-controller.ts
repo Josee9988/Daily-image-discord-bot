@@ -48,10 +48,10 @@ export default class CommandsController {
                     helpCommand(message);
                     break;
                 case "info":
-                    infoCommand(message);
+                    infoCommand(message, await this.databaseController.countDocuments());
                     break;
                 case "ping":
-                    pingCommand(message, this.client.ws.ping);
+                    await pingCommand(message, this.client.ws.ping);
                     break;
                 case "pong":
                     pongCommand(message);
