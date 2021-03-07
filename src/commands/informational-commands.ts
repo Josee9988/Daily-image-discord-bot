@@ -16,9 +16,12 @@ export function helpCommand(message: Message): void {
  * @param documentCount number of documents found in the DB
  */
 export function infoCommand(message: Message, documentCount: number): void {
-    const countDocsMsg = "There are currently: \"**" + documentCount + "**\" happy servers using Daily image bot :)";
     message.channel.send(infoMessage.msg).catch((e: any) => permissionErrorHandler(infoMessage.msg, e));
-    message.channel.send(countDocsMsg).catch((e: any) => permissionErrorHandler(countDocsMsg, e));
+    if (documentCount > 0) { // display doc count if it higher than 0 (no error has found while counting)
+        const countDocsMsg = "There are currently: \"**" + documentCount + "**\" happy servers using Daily image bot :)";
+        message.channel.send(countDocsMsg).catch((e: any) => permissionErrorHandler(countDocsMsg, e));
+    }
+
 }
 
 /**

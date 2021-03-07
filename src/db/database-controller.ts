@@ -19,7 +19,7 @@ export default class DatabaseController {
      */
     async findAll(): Promise<IDimg[]> {
         let serversFound = null;
-        await DimgSchemaData.find().then((result) => {
+        await DimgSchemaData.find().then((result: any) => {
             serversFound = result;
         });
         return serversFound;
@@ -73,8 +73,8 @@ export default class DatabaseController {
      */
     async countDocuments(): Promise<number> {
         let docCount = 0;
-        DimgSchemaData.countDocuments().then((num: number) => {
-            docCount = num;
+        await DimgSchemaData.countDocuments().then((result: number) => {
+            docCount = result;
         });
         return docCount;
     }
