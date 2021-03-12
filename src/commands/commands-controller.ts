@@ -8,6 +8,9 @@ import {IDimg} from "../db/dimg-interface";
 import {helpCommand, infoCommand, pingCommand, pongCommand, unknownCommand} from "./informational-commands";
 import checkIfUserIsAdmin from "./checkIfUserIsAdmin";
 
+const shortUrl = require('node-url-shortener');
+
+
 export default class CommandsController {
     private cronJob: CronJob;
 
@@ -140,13 +143,20 @@ export default class CommandsController {
         const photos: ImageInfo[] | null = await GooglePhotosAlbum.fetchImageUrls(dimg.albumLink);
         const randomPhoto = Math.floor((Math.random() * Object.keys(photos).length) + 1);
 
-        if (dimg.channelId) { // if the channel is specified
+        if (dimg.channelId) { // if the channel is specified send the image
             await this.client.channels.cache.get(dimg.channelId)
                 .send(photos[randomPhoto].url);
             await this.client.channels.cache.get(dimg.channelId)
-                .send(`Check it out at: *${photos[randomPhoto].url}*`);
-            await this.client.channels.cache.get(dimg.channelId)
                 .send(`${sendRandomPhotoMessage.msg2}**${new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString()}**`);
+
+            // send the shortened url
+            let shortenedUrl = photos[randomPhoto].url;
+            await shortUrl.short('https://codeportal.in', (err: any, receivedShortenedUrl: any) => {
+                if (receivedShortenedUrl && !err) shortenedUrl = receivedShortenedUrl;
+            });
+            await this.client.channels.cache.get(dimg.channelId)
+                .send(`Check it out at: *${shortenedUrl}*`);
+
         }
     }
 }
