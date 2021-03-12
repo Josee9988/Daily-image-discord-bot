@@ -142,12 +142,11 @@ export default class CommandsController {
 
         if (dimg.channelId) { // if the channel is specified
             await this.client.channels.cache.get(dimg.channelId)
-                .send(sendRandomPhotoMessage.msg1, {files: [photos[randomPhoto].url]});
-            await this.client.channels.cache.get(dimg.channelId)
                 .send(photos[randomPhoto].url);
             await this.client.channels.cache.get(dimg.channelId)
-                .send(sendRandomPhotoMessage.msg2 + "**" + new Date(photos[randomPhoto].imageUpdateDate)
-                    .toLocaleDateString() + "**");
+                .send(`Check it out at: *${photos[randomPhoto].url}*`);
+            await this.client.channels.cache.get(dimg.channelId)
+                .send(`${sendRandomPhotoMessage.msg2}**${new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString()}**`);
         }
     }
 }
