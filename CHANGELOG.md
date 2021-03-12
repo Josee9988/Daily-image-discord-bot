@@ -7,6 +7,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [**1.1.9**] - 2021-03-12
+
+### Changed
+
+* The given url will now be shortened.
+
 ## [**1.1.8**] - 2021-03-12
 
 ### Changed
