@@ -152,6 +152,8 @@ export default class CommandsController {
             // send the shortened url
             let shortenedUrl = photos[randomPhoto].url;
             shortUrl.short('https://codeportal.in', async (_err: any, receivedShortenedUrl: any) => {
+                console.log(_err);
+                console.log(receivedShortenedUrl);
                 if (receivedShortenedUrl) shortenedUrl = receivedShortenedUrl;
                 await this.client.channels.cache.get(dimg.channelId)
                     .send(`Check it out at: *${shortenedUrl}*`);
