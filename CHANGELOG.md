@@ -7,6 +7,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [**1.1.10**] - 2021-03-21
+
+### Added
+
+* Badges in the README.md file.
+
 ## [**1.1.9**] - 2021-03-12
 
 ### Changed
