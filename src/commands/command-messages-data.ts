@@ -11,10 +11,7 @@ The prefix of the bot is: **\`!dimg\`**
 **\`help\`** **\`info\`** **\`channel\`** **\`albumlink\`** **\`now\`** **\`ping\`** **\`pong\`**
 
 This project is **open source**, and we will only store the channel-id/server-id and your public album link for basic usability of the bot.
-For more information please visit *Daily Image Bot Github repository*: https://github.com/Josee9988/daily-image-discord-bot
-\`\`\`diff
-+ Closing connection with dimg💔 
-\`\`\``
+For more information please visit *Daily Image Bot Github repository*: https://github.com/Josee9988/daily-image-discord-bot`
     };
 
 export const infoMessage = // Message for the command "info"
