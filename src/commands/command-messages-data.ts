@@ -23,9 +23,10 @@ export const infoMessage = // Message for the command "info"
 
 **Contact the creator of the bot**:
 LinkedIn: https://www.linkedin.com/in/jose-gracia/
-Owner's GitHub: https://github.com/Josee9988/
+GitHub: https://github.com/Josee9988/
+Support the bot ❤️: https://github.com/sponsors/Josee9988/
+Upvote the bot at ❤️: https://top.gg/bot/806274731245436960/
 Email: jgracia9988@gmail.com
-Personal page: http://jgracia.es/
 
 **Bot's repository**: https://github.com/Josee9988/Daily-image-discord-bot/
 **Report any issues at:**: https://github.com/Josee9988/Daily-image-discord-bot/issues/`
@@ -55,8 +56,9 @@ To save you time here is a super simplified **installation guide**. :gear:
 
 If you wanted to **contact the owner of the bot**: :e_mail:
 LinkedIn: https://www.linkedin.com/in/jose-gracia/
-GitHub: https://github.com/Josee9988
-Donations: https://paypal.me/josee9988
+GitHub: https://github.com/Josee9988/
+Support the bot ❤️: https://github.com/sponsors/Josee9988/
+Upvote the bot at ❤️: https://top.gg/bot/806274731245436960/
 Email: jgracia9988@gmail.com
 
 **Bot's repository**: https://github.com/Josee9988/Daily-image-discord-bot/

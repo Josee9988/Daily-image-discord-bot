@@ -7,6 +7,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [**1.1.11**] - 2021-03-21
+
+### Added
+
+* New donate link in the information commands.
+
 ## [**1.1.10**] - 2021-03-21
 
 ### Added
