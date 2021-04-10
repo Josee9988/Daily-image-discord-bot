@@ -7,6 +7,16 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [**1.1.12**] - 2021-04-10
+
+### Added
+
+* Dev.to link in the help commands.
+
+### Changed
+
+* Order of some links in the help commands.
+
 ## [**1.1.11**] - 2021-03-21
 
 ### Added

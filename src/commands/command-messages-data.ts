@@ -18,15 +18,16 @@ export const infoMessage = // Message for the command "info"
     {
         msg: `**dimg info**
 
-**Contact the creator of the bot**:
-LinkedIn: https://www.linkedin.com/in/jose-gracia/
-GitHub: https://github.com/Josee9988/
+**Contact links**:
 Support the bot ❤️: https://github.com/sponsors/Josee9988/
 Upvote the bot at ❤️: https://top.gg/bot/806274731245436960/
+LinkedIn: https://www.linkedin.com/in/jose-gracia/
+GitHub: https://github.com/Josee9988/
+Dev.to: https://dev.to/josee9988/
 Email: jgracia9988@gmail.com
 
 **Bot's repository**: https://github.com/Josee9988/Daily-image-discord-bot/
-**Report any issues at:**: https://github.com/Josee9988/Daily-image-discord-bot/issues/`
+**Report any issues or request a feature at:**: https://github.com/Josee9988/Daily-image-discord-bot/issues/`
     };
 
 export const sendRandomPhotoMessage = // Message for the function sendRandomPhoto (called by the cron)
@@ -52,14 +53,15 @@ To save you time here is a super simplified **installation guide**. :gear:
 - The commands \`!dimg channel\`, \`!dimg albumlink\` and \`!dimg now\` can only be executed by the server administrators (to avoid server trolls).
 
 If you wanted to **contact the owner of the bot**: :e_mail:
-LinkedIn: https://www.linkedin.com/in/jose-gracia/
-GitHub: https://github.com/Josee9988/
 Support the bot ❤️: https://github.com/sponsors/Josee9988/
 Upvote the bot at ❤️: https://top.gg/bot/806274731245436960/
+LinkedIn: https://www.linkedin.com/in/jose-gracia/
+GitHub: https://github.com/Josee9988/
+Dev.to: https://dev.to/josee9988/
 Email: jgracia9988@gmail.com
 
 **Bot's repository**: https://github.com/Josee9988/Daily-image-discord-bot/
-**Report any issues at:**: https://github.com/Josee9988/Daily-image-discord-bot/issues/
+**Report any issues or request a feature at:**: https://github.com/Josee9988/Daily-image-discord-bot/issues/
 
 Thanks, and enjoy!!!`
     };
