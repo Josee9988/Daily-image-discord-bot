@@ -145,12 +145,12 @@ export default class CommandsController {
 
         if (dimg.channelId) { // if the channel is specified send the image
             await this.client.channels.cache.get(dimg.channelId)
-                .send(photos[randomPhoto]);
+                .send(photos[randomPhoto].url);
             await this.client.channels.cache.get(dimg.channelId)
                 .send(`${sendRandomPhotoMessage.msg2}**${new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString()}**`);
 
             // send the shortened url, and if not, just send the non shortened url
-            let shortenedUrl = photos[randomPhoto];
+            let shortenedUrl = photos[randomPhoto].url;
             shortUrl.short(shortenedUrl, async (_err: any, receivedShortenedUrl: any) => {
                 if (receivedShortenedUrl) shortenedUrl = receivedShortenedUrl;
                 await this.client.channels.cache.get(dimg.channelId)
