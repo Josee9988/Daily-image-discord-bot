@@ -145,7 +145,7 @@ export default class CommandsController {
 
         if (dimg.channelId) { // if the channel is specified send the image
             await this.client.channels.cache.get(dimg.channelId)
-                .send(photos[randomPhoto].url);
+                .send(photos[randomPhoto].url).catch((e: any) => console.error(`Couldn't send photo ${photos[randomPhoto]} with url ${photos[randomPhoto].url}. E: ${e}`));
             await this.client.channels.cache.get(dimg.channelId)
                 .send(`${sendRandomPhotoMessage.msg2}**${new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString()}**`);
 
