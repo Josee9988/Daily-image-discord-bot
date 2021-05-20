@@ -7,6 +7,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [**1.2.0**] - 2021-05-20
+
+### Fixed
+
+* Some bugs to allow all the users to receive the photo by the cron.
+
 ## [**1.1.12**] - 2021-04-10
 
 ### Added
