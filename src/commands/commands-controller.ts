@@ -16,8 +16,9 @@ export default class CommandsController {
 
     constructor(private PREFIX: string, private client: any, private databaseController: DatabaseController) {
         // 30 */12 * * *    (at minute 30 past every 12th hour) * * * * * for every minute (testing purposes)
-        this.cronJob = new CronJob('30 */12 * * *', async () =>
-            await this.sendRandomPhoto(false).catch((e: any) => console.error(e)));
+        this.cronJob = new CronJob('30 */1 * * *', async () => {
+            await this.sendRandomPhoto(false).catch((e: any) => console.error(e));
+        });
 
         // Start cron job
         if (!this.cronJob.running) {
