@@ -15,8 +15,8 @@ export default class CommandsController {
     private cronJob: CronJob;
 
     constructor(private PREFIX: string, private client: any, private databaseController: DatabaseController) {
-        // 30 */12 * * *    (at minute 30 past every 12th hour) * * * * * for every minute (testing purposes)
-        this.cronJob = new CronJob('50 */1 * * *', async () => {
+        // 30 */12 * * *    (at minute 30 past every 10th hour) * * * * * for every minute (testing purposes)
+        this.cronJob = new CronJob('30 */10 * * *', async () => {
             await this.sendRandomPhoto(false).catch((e: any) => console.error(e));
         });
 
@@ -140,11 +140,20 @@ export default class CommandsController {
      * @param dimg the dimg object to be searched in the database.
      */
     private async fetchAndSendPhoto(dimg: IDimg): Promise<void> {
+        let isDetectedAFetchFail: boolean = false;
         if (dimg.albumLink === null || dimg.albumLink === undefined || dimg.albumLink.length < 20) return;
-        const photos: ImageInfo[] | null = await GooglePhotosAlbum.fetchImageUrls(dimg.albumLink);
+        const photos: ImageInfo[] | any = await GooglePhotosAlbum.fetchImageUrls(dimg.albumLink).catch(() => isDetectedAFetchFail = true);
+        if (!photos || isDetectedAFetchFail) {
+            console.debug("Photos object broken for serverId:: " + dimg.serverId)
+            return;
+        }
         const randomPhoto = Math.floor((Math.random() * Object.keys(photos).length) + 1);
 
         if (dimg.channelId) { // if the channel is specified send the image
+            if (!photos[randomPhoto] || !photos[randomPhoto].url) {
+                console.error("Url does not exist for server " + dimg.serverId + " with the photo object being like: " + photos[randomPhoto] + "object:");
+                return;
+            }
             await this.client.channels.cache.get(dimg.channelId)
                 .send(photos[randomPhoto].url).catch((e: any) => console.error(`Couldn't send photo ${photos[randomPhoto]} with url ${photos[randomPhoto].url}.\nE: ${e}`));
             await this.client.channels.cache.get(dimg.channelId)
@@ -157,8 +166,6 @@ export default class CommandsController {
                 await this.client.channels.cache.get(dimg.channelId)
                     .send(`Check it out at: *${shortenedUrl}*`);
             });
-
-
         }
     }
 }
