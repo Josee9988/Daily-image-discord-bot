@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+
 # **Daily Image Discord Bot**
 
 <p align="center">

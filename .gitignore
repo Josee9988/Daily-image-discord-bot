@@ -118,5 +118,10 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/node
 
+
+###> Josee9988/Daily-Image-discord-bot ###
+.vscode/
 .idea/
 out/
+*.ignore.*
+###< Josee9988/Daily-Image-discord-bot ###

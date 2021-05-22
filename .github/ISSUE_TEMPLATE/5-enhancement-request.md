@@ -1,15 +1,15 @@
 ---
-name: "🚀🆕 Feature Request"
-about: "Suggest an idea or possible new feature for this project."
+name: "🚀➕ Enhancement Request"
+about: "Suggest an enhancement for this project. Improve an existing feature"
 title: ""
-labels: "Type: Feature"
+labels: "Type: Enchancement"
 assignees: Josee9988
 
 ---
 
-# **🚀 Feature Request**
+# **🚀 Enhancement Request**
 
-## **Is your feature request related to a problem? Please describe.**
+## **Is your enhancement request related to a problem? Please describe.**
 <!-- A clear and concise description of what the problem is. Ex. I'm always frustrated when [...] -->
 
 *
@@ -34,6 +34,8 @@ assignees: Josee9988
 <!-- Add any other context or additional information about the problem here.-->
 
 *
+
+<!--📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛
 
 Oh hi there! 😄
 

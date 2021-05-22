@@ -1,20 +1,11 @@
 ---
 name: "🐞 Bug Report"
 about: "Report an issue to help the project improve."
-title: ""
-labels: bug
+title: "[Bug] "
+labels: "Type: Bug"
 assignees: Josee9988
 
 ---
-
-<!--📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛
-
-Oh hi there! 😄
-
-To expedite issue processing please search open and closed issues before submitting a new one.
-Please read our Rules of Conduct at this repository's `.github/CODE_OF_CONDUCT.md`
-
-📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛-->
 
 # **🐞 Bug Report**
 
@@ -26,7 +17,7 @@ Please read our Rules of Conduct at this repository's `.github/CODE_OF_CONDUCT.m
 ---
 
 ### **Is this a regression?**
-<!-- Did this behaviour use to work in the previous version? -->
+<!-- Did this behaviour used to work in the previous version? -->
 <!-- Yes, the previous version in which this bug was not present was: ... -->
 
 ---
@@ -77,3 +68,12 @@ and remove all the bulleted list elements that are not relevant for this issue. 
 <!-- Add any other context or additional information about the problem here.-->
 
 *
+
+<!--📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛
+
+Oh hi there! 😄
+
+To expedite issue processing please search open and closed issues before submitting a new one.
+Please read our Rules of Conduct at this repository's `.github/CODE_OF_CONDUCT.md`
+
+📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛📛-->
