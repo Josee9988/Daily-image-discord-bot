@@ -7,6 +7,14 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [**1.2.1**] - 2021-05-22
+
+``
+
+### Added
+
+* Check of the channel id can be gathered before sending the random image.
+
 ## [**1.2.0**] - 2021-05-20
 
 ### Fixed

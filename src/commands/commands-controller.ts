@@ -149,7 +149,7 @@ export default class CommandsController {
         }
         const randomPhoto = Math.floor((Math.random() * Object.keys(photos).length) + 1);
 
-        if (dimg.channelId) { // if the channel is specified send the image
+        if (dimg.channelId && this.client.channels.cache.get(dimg.channelId)) { // if the channel is specified send the image
             if (!photos[randomPhoto] || !photos[randomPhoto].url) {
                 console.error("Url does not exist for server " + dimg.serverId + " with the photo object being like: " + photos[randomPhoto] + "object:");
                 return;
