@@ -8,9 +8,6 @@ import {IDimg} from "../db/dimg-interface";
 import {helpCommand, infoCommand, pingCommand, pongCommand, unknownCommand} from "./informational-commands";
 import checkIfUserIsAdmin from "./checkIfUserIsAdmin";
 
-const shortUrl = require('node-url-shortener');
-
-
 export default class CommandsController {
     private cronJob: CronJob;
 
@@ -158,14 +155,6 @@ export default class CommandsController {
                 .send(photos[randomPhoto].url).catch((e: any) => console.error(`Couldn't send photo ${photos[randomPhoto]} with url ${photos[randomPhoto].url}.\nE: ${e}`));
             await this.client.channels.cache.get(dimg.channelId)
                 .send(`${sendRandomPhotoMessage.msg2}**${new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString()}**`);
-
-            // send the shortened url, and if not, just send the non shortened url
-            let shortenedUrl = photos[randomPhoto].url;
-            shortUrl.short(shortenedUrl, async (_err: any, receivedShortenedUrl: any) => {
-                if (receivedShortenedUrl) shortenedUrl = receivedShortenedUrl;
-                await this.client.channels.cache.get(dimg.channelId)
-                    .send(`Check it out at: *${shortenedUrl}*`);
-            });
         }
     }
 }
