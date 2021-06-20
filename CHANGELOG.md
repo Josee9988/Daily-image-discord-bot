@@ -7,9 +7,13 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-## [**1.2.1**] - 2021-05-22
+## [**1.3.0**] - 2021-06-20
 
-``
+### Removed
+
+* Node short url. The url will not be send as a message.
+
+## [**1.2.1**] - 2021-05-22
 
 ### Added
 
