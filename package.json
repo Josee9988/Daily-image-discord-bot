@@ -36,7 +36,6 @@
     "dotenv": "^8.2.0",
     "google-photos-album-image-url-fetch": "^2.2.0",
     "mongoose": "^5.11.15",
-    "node-url-shortener": "^1.1.11",
     "tslib": "^1.14.1"
   },
   "devDependencies": {
