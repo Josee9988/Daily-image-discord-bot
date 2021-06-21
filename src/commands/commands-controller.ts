@@ -48,6 +48,9 @@ export default class CommandsController {
                 case "help":
                     helpCommand(message);
                     break;
+                case "sendmsg":
+                    await this.setSendMsg(message, args);
+                    break;
                 case "info":
                     infoCommand(message, await this.databaseController.countDocuments());
                     break;
@@ -99,6 +102,22 @@ export default class CommandsController {
     }
 
     /**
+     * Sets a message when the image is sent in the database.
+     * @param message the message that called the command.
+     * @param msgToBeSet the message to be set.
+     */
+    private async setSendMsg(message: Message, msgToBeSet: string[]): Promise<void> {
+        if (!checkIfUserIsAdmin(message)) return;
+        const server = await this.databaseController.findByServerId(message.guild.id);
+        if (server.channelId) {
+            await this.databaseController.setSendMsg(message.guild.id, msgToBeSet[0]);
+            await message.channel.send("Your message is set :)");
+        } else { // no channel specified
+            await message.channel.send(":interrobang:Please specify a channel first with `!dimg channel nameOfYourChannel`");
+        }
+    }
+
+    /**
      * Check makes the calls to send a random photo to the specified channel
      * @param message the message that called it
      * @param forceChannelToBeTheSame if the message has to be sent from the same channel that the photos goes in.
@@ -138,6 +157,7 @@ export default class CommandsController {
      */
     private async fetchAndSendPhoto(dimg: IDimg): Promise<void> {
         let isDetectedAFetchFail: boolean = false;
+        let msg1Detected = dimg.sendMsg ? dimg.sendMsg : sendRandomPhotoMessage.msg1;
         if (dimg.albumLink === null || dimg.albumLink === undefined || dimg.albumLink.length < 20) return;
         const photos: ImageInfo[] | any = await GooglePhotosAlbum.fetchImageUrls(dimg.albumLink).catch(() => isDetectedAFetchFail = true);
         if (!photos || isDetectedAFetchFail) {
@@ -153,6 +173,7 @@ export default class CommandsController {
             }
             await this.client.channels.cache.get(dimg.channelId)
                 .send(photos[randomPhoto].url).catch((e: any) => console.error(`Couldn't send photo ${photos[randomPhoto]} with url ${photos[randomPhoto].url}.\nE: ${e}`));
+            await this.client.channels.cache.get(dimg.channelId).send(`${msg1Detected}`);
             await this.client.channels.cache.get(dimg.channelId)
                 .send(`${sendRandomPhotoMessage.msg2}**${new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString()}**`);
         }

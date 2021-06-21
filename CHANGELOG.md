@@ -7,6 +7,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [**1.3.1**] - 2021-06-20
+
+### Added
+
+* Command sendmsg to allow the users to send specific messages when posting the image.
+
 ## [**1.3.0**] - 2021-06-20
 
 ### Removed
