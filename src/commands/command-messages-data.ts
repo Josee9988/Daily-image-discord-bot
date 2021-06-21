@@ -46,11 +46,12 @@ Please make sure you check our simple documentation and our quick installation g
 To save you time here is a super simplified **installation guide**. :gear:
 1. \`!dimg channel nameOfYourChannel\` to select the channel where the images will be sent.
 2. \`!dimg albumlink linkOfYourPublicGooglePhotosAlbum\` to specify the bot the link of the public google photos album.
-3 (extra). \`!dimg now\` to force the bot to publish a photo now. (this command must be sent in the selected channel).
+3. (extra). \`!dimg now\` to force the bot to publish a photo now. (this command must be sent in the selected channel).
+4. (extra). \`!dimg sendmsg\` to modify the send message.
 
 **Security** :shield:
 - This bot is fully **open-source** and **free**, and we only store the minimum information for the good performing of the bot (server id, channel id and album link), so you can feel safe with us. You can also check our code repository in case you wanted to contribute to the development or fix/notify any possible bug.
-- The commands \`!dimg channel\`, \`!dimg albumlink\` and \`!dimg now\` can only be executed by the server administrators (to avoid server trolls).
+- The commands \`!dimg channel\`, \`!dimg sendmsg\`, \`!dimg albumlink\` and \`!dimg now\` can only be executed by the server administrators (to avoid server trolls).
 
 If you wanted to **contact the owner of the bot**: :e_mail:
 Support the bot ❤️: https://github.com/sponsors/Josee9988/
