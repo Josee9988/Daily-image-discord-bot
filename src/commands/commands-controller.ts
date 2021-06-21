@@ -108,7 +108,7 @@ export default class CommandsController {
      */
     private async setSendMsg(message: Message, msgToBeSet: string[]): Promise<void> {
         let msg = "";
-        for (const word of msgToBeSet) msg += word;
+        for (const word of msgToBeSet) msg += word + "";
         if (!checkIfUserIsAdmin(message)) return;
         const server = await this.databaseController.findByServerId(message.guild.id);
         if (server.channelId) {
