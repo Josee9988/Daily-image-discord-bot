@@ -108,12 +108,12 @@ export default class CommandsController {
      */
     private async setSendMsg(message: Message, msgToBeSet: string[]): Promise<void> {
         let msg = "";
-        for (const word of msgToBeSet) msg += word + "";
+        for (const word of msgToBeSet) msg += word + " ";
         if (!checkIfUserIsAdmin(message)) return;
         const server = await this.databaseController.findByServerId(message.guild.id);
         if (server.channelId) {
             await this.databaseController.setSendMsg(message.guild.id, msg);
-            await message.channel.send("Your message is set :)");
+            await message.channel.send("Your message is now: " + msg);
         } else { // no channel specified
             await message.channel.send(":interrobang:Please specify a channel first with `!dimg channel nameOfYourChannel`");
         }
