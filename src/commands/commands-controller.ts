@@ -48,6 +48,9 @@ export default class CommandsController {
                 case "help":
                     helpCommand(message);
                     break;
+                case "sendmsg":
+                    await this.setSendMsg(message, args);
+                    break;
                 case "info":
                     infoCommand(message, await this.databaseController.countDocuments());
                     break;
@@ -95,6 +98,22 @@ export default class CommandsController {
             await message.channel.send("Daily Image Bot will now only speak in: " + channelToBeSet);
         } else {
             await message.channel.send(":interrobang:Your channel couldn't be found. Please re-write it again :D");
+        }
+    }
+
+    /**
+     * Sets a message when the image is sent in the database.
+     * @param message the message that called the command.
+     * @param msgToBeSet the message to be set.
+     */
+    private async setSendMsg(message: Message, msgToBeSet: string[]): Promise<void> {
+        if (!checkIfUserIsAdmin(message)) return;
+        const server = await this.databaseController.findByServerId(message.guild.id);
+        if (server.channelId) {
+            await this.databaseController.setSendMsg(message.guild.id, msgToBeSet[0]);
+            await message.channel.send("Your message is set :)");
+        } else { // no channel specified
+            await message.channel.send(":interrobang:Please specify a channel first with `!dimg channel nameOfYourChannel`");
         }
     }
 

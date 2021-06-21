@@ -8,7 +8,7 @@ export const helpMessage = // Message for the command "help"
 The prefix of the bot is: **\`!dimg\`**
 
 **Command list**:fire: :
-**\`help\`** **\`info\`** **\`channel\`** **\`albumlink\`** **\`now\`** **\`ping\`** **\`pong\`**
+**\`help\`** **\`info\`** **\`channel\`** **\`albumlink\`** **\`sendmsg\`** **\`now\`** **\`ping\`** **\`pong\`**
 
 This project is **open source**, and we will only store the channel-id/server-id and your public album link for basic usability of the bot.
 For more information please visit *Daily Image Bot Github repository*: https://github.com/Josee9988/daily-image-discord-bot`

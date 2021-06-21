@@ -48,9 +48,10 @@ Feel safe🛡️.
    Photos album.
 4. **`now`** -> If `channel` and `albumlink` are set, and you are typing the message from the specified channel, then it
    will force a photo to appear just now (it will not break the cron schedule, just forces an extra photo to appear now)
-5. **`info`** -> Useful links (documentation/ owner contact).
-6. **`ping`** -> Displays bot latency and API latency.
-7. **`pong`** -> Replies ping🤪.
+5. **`sendmsg`** -> The message that will be sent with the image.
+6. **`info`** -> Useful links (documentation/ owner contact).
+7. **`ping`** -> Displays bot latency and API latency.
+8. **`pong`** -> Replies ping🤪.
 
 - The commands `!dimg channel`, `!dimg albumlink` and `!dimg now` can only be executed by the server administrators (to
   avoid server trolls).
