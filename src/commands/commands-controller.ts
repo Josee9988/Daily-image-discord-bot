@@ -37,6 +37,7 @@ export default class CommandsController {
 
             switch (CMD_NAME.toLocaleLowerCase()) {
                 case "albumlink":
+                case "albumLink":
                     await this.setAlbumLink(message, args);
                     break;
                 case "channel":
@@ -49,6 +50,7 @@ export default class CommandsController {
                     helpCommand(message);
                     break;
                 case "sendmsg":
+                case "msgsend":
                     await this.setSendMsg(message, args);
                     break;
                 case "info":
@@ -91,7 +93,7 @@ export default class CommandsController {
      */
     private async setChannel(message: Message, channelToBeSet: string[]): Promise<void> {
         if (!checkIfUserIsAdmin(message)) return;
-        const channelId = await this.client.channels.cache.find(
+        const channelId = message.guild.channels.cache.find(
             (channel: { name: string; }) => channel.name === channelToBeSet[0]);
         if (channelId && channelId.id) {
             await this.databaseController.setChannel(message.guild.id, channelId.id);
@@ -147,9 +149,8 @@ export default class CommandsController {
             }
         } else { // CRON started the job. and we don't have the message available
             let dimgs = await this.databaseController.findAll();
-            for (const dimg of dimgs) { // iterate over every document and send the photos to every respective server
-                await this.fetchAndSendPhoto(dimg);
-            }
+            // iterate over every document and send the photos to every respective server
+            for (const dimg of dimgs) await this.fetchAndSendPhoto(dimg);
         }
     }
 
