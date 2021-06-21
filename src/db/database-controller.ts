@@ -69,6 +69,16 @@ export default class DatabaseController {
     }
 
     /**
+     * Sets/updates the send message from an element with the server id given.
+     * @param serverId the id of the server.
+     * @param sendMsg the send message to be set/updated.
+     */
+    async setSendMsg(serverId: string, sendMsg: string): Promise<void> {
+        DimgSchemaData.findOneAndUpdate({'serverId': serverId}, {$set: {sendMsg: sendMsg}})
+            .catch((e: any) => console.error(e));
+    }
+
+    /**
      * Counts the number of documents in the database and return that number.
      */
     async countDocuments(): Promise<number> {

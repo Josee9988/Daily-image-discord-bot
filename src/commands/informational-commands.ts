@@ -21,7 +21,6 @@ export function infoCommand(message: Message, documentCount: number): void {
         const countDocsMsg = "There are currently: \"**" + documentCount + "**\" happy servers using Daily image bot :)";
         message.channel.send(countDocsMsg).catch((e: any) => permissionErrorHandler(countDocsMsg, e));
     }
-
 }
 
 /**
