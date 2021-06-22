@@ -7,7 +7,13 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-## [**1.3.2**] - 2021-06-20
+## [**1.3.2**] - 2021-06-22
+
+### Added
+
+* Some command aliases to make the user experience even better.
+
+## [**1.3.2**] - 2021-06-21
 
 ### Fixed
 
