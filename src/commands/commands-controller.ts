@@ -38,6 +38,8 @@ export default class CommandsController {
             switch (CMD_NAME.toLocaleLowerCase()) {
                 case "albumlink":
                 case "albumLink":
+                case "link":
+                case "album":
                     await this.setAlbumLink(message, args);
                     break;
                 case "channel":
