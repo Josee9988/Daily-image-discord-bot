@@ -31,7 +31,7 @@ export default class DatabaseController {
      */
     async findByServerId(serverId: string): Promise<IDimg> {
         let serverFound = null;
-        await DimgSchemaData.findOne({serverId: serverId}).then((result) => {
+        await DimgSchemaData.findOne({serverId: serverId}).then((result?: IDimg) => {
             serverFound = result;
         });
         return serverFound;
