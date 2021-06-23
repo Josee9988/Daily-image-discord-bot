@@ -24,9 +24,9 @@ client.on('guildCreate', (guild: Guild) => { // when the bot joins a server
     guild.systemChannel.send("Thanks for inviting me to your awesome server💖, use **`!dimg help`** for more information :D.")
         .catch(() => console.log("Couldn't send welcome message."));
 
-    // When the bot is added to a new server, it will send a DM to the server owner.
-    client.users.cache.get(guild.ownerID).send(welcomeOwnerPrivatelyMessage.msg)
-        .catch((e: any) => console.error(('Couldn\'t send a welcome DM message to the owner, ERROR:' + e)));
+    if (client.users.cache.get(guild.ownerID)) // When the bot is added to a new server, it will send a DM to the server owner.
+        client.users.cache.get(guild.ownerID).send(welcomeOwnerPrivatelyMessage.msg)
+            .catch((e: any) => console.error(('Couldn\'t send a welcome DM message to the owner, ERROR:' + e)));
 });
 
 // event listener "guildDelete".
