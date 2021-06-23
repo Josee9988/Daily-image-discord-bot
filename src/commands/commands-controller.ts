@@ -162,7 +162,7 @@ export default class CommandsController {
      * @param dimg the dimg object to be searched in the database.
      */
     private async fetchAndSendPhoto(dimg: IDimg): Promise<void> {
-        if (dimg.channelId || this.client.channels.cache.get(dimg.channelId) == null) return; // channel not defined
+        if (dimg.channelId == null || this.client.channels.cache.get(dimg.channelId) == null) return; // channel not defined
         let isDetectedAFetchFail: boolean = false;
         let msg1Detected = dimg.sendMsg ? dimg.sendMsg : sendRandomPhotoMessage.msg1;
         const photos: ImageInfo[] | any = await GooglePhotosAlbum.fetchImageUrls(dimg.albumLink).catch(() => isDetectedAFetchFail = true);
