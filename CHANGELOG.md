@@ -7,6 +7,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [**1.3.4**] - 2021-06-23
+
+### Fixed
+
+* The bot now checks if the channel exists before sending a message.
+
 ## [**1.3.2**] - 2021-06-22
 
 ### Added
