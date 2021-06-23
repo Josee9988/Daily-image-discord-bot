@@ -13,14 +13,12 @@ export default class CommandsController {
 
     constructor(private PREFIX: string, private client: any, private databaseController: DatabaseController) {
         // 30 */12 * * *    (at minute 30 past every 12th hour) * * * * * for every minute (testing purposes)
-        this.cronJob = new CronJob('* * * * *', async () => { // TODO: REMOVE COMMENTS
+        this.cronJob = new CronJob('30 */12 * * *', async () => {
             await this.sendRandomPhoto(false).catch((e: any) => console.error(e));
         });
 
         // Start cron job
-        if (!this.cronJob.running) {
-            this.cronJob.start();
-        }
+        if (!this.cronJob.running) this.cronJob.start();
     }
 
     /**
@@ -164,14 +162,12 @@ export default class CommandsController {
      * @param dimg the dimg object to be searched in the database.
      */
     private async fetchAndSendPhoto(dimg: IDimg): Promise<void> {
-        if (dimg.serverId !== "856855520311771176") return; // TODO: IF NOT TEST SERVER JUST LEAVE
-        await this.client.channels.cache.get(dimg.channelId)
-            .send("⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠ ️The bot is under maintenance, it might post more photos than the expected or work unexpectedly for a while, please be patient ;) ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️"); // TODO: remove
+        if (dimg.channelId || this.client.channels.cache.get(dimg.channelId) == null) return; // channel not defined
         let isDetectedAFetchFail: boolean = false;
         let msg1Detected = dimg.sendMsg ? dimg.sendMsg : sendRandomPhotoMessage.msg1;
         const photos: ImageInfo[] | any = await GooglePhotosAlbum.fetchImageUrls(dimg.albumLink).catch(() => isDetectedAFetchFail = true);
         if (!photos || isDetectedAFetchFail || Object.keys(photos).length < 1) {
-            console.debug("Photos object broken for serverId:: " + dimg.serverId)
+            console.error("Photos object broken for serverId: " + dimg.serverId)
             return;
         }
         const randomPhoto = Math.floor((Math.random() * Object.keys(photos).length) + 1);
