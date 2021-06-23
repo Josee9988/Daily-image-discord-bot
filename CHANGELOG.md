@@ -7,6 +7,13 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [**1.3.5**] - 2021-06-23
+
+### Fixed
+
+* Add check before sending a message to the owner.
+* "permission-error-handler" import created
+
 ## [**1.3.4**] - 2021-06-23
 
 ### Fixed
