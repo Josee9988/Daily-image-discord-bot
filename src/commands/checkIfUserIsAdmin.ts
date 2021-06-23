@@ -6,6 +6,7 @@
  * @return boolean true|false True if the user is admin, otherwise false.
  */
 import {Message} from "discord.js";
+import permissionErrorHandler from "../errors/permission-error-handler";
 
 export default function checkIfUserIsAdmin(message: Message): boolean {
     if (message.member.hasPermission("ADMINISTRATOR")) {
