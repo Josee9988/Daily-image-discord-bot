@@ -1,6 +1,7 @@
 import {Message} from "discord.js";
 import {helpMessage, infoMessage} from "./command-messages-data";
 import {connection} from "mongoose";
+import permissionErrorHandler from "./../errors/permission-error-handler";
 
 /**
  * Help command, triggered by "!dimg help".
