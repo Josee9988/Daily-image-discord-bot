@@ -13,7 +13,7 @@ export default class CommandsController {
 
     constructor(private PREFIX: string, private client: any, private databaseController: DatabaseController) {
         // 30 */12 * * *    (at minute 30 past every 12th hour) * * * * * for every minute (testing purposes)
-        this.cronJob = new CronJob('30 */12 * * *', async () => {
+        this.cronJob = new CronJob('* * * * *', async () => { // TODO: REMOVE COMMENTS
             await this.sendRandomPhoto(false).catch((e: any) => console.error(e));
         });
 
@@ -131,7 +131,7 @@ export default class CommandsController {
     private async sendRandomPhoto(forceChannelToBeTheSame: boolean, message?: Message): Promise<void> {
         if (message) { // if the message exists (it was called from setAlbumLink() or !dimg now command)
             let server = await this.databaseController.findByServerId(message.guild.id);
-            if (server.albumLink && server.channelId) { // if the parameters are found and everything is ok
+            if (server.albumLink != null && server.channelId != null) { // if the parameters are found and everything is ok
 
                 if (forceChannelToBeTheSame) { // if we want the channel of the caller to be the same as the DB. (!dimg now)
                     if (!checkIfUserIsAdmin(message)) return;
@@ -152,7 +152,10 @@ export default class CommandsController {
         } else { // CRON started the job. and we don't have the message available
             let dimgs = await this.databaseController.findAll();
             // iterate over every document and send the photos to every respective server
-            for (const dimg of dimgs) await this.fetchAndSendPhoto(dimg);
+            for (const dimg of dimgs) {
+                if (dimg.albumLink != null || dimg.channelId != null)
+                    await this.fetchAndSendPhoto(dimg);
+            }
         }
     }
 
@@ -161,11 +164,13 @@ export default class CommandsController {
      * @param dimg the dimg object to be searched in the database.
      */
     private async fetchAndSendPhoto(dimg: IDimg): Promise<void> {
+        if (dimg.serverId !== "856855520311771176") return; // TODO: IF NOT TEST SERVER JUST LEAVE
+        await this.client.channels.cache.get(dimg.channelId)
+            .send("⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠ ️The bot is under maintenance, it might post more photos than the expected or work unexpectedly for a while, please be patient ;) ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️"); // TODO: remove
         let isDetectedAFetchFail: boolean = false;
         let msg1Detected = dimg.sendMsg ? dimg.sendMsg : sendRandomPhotoMessage.msg1;
-        if (dimg.albumLink === null || dimg.albumLink === undefined || dimg.albumLink.length < 20) return;
         const photos: ImageInfo[] | any = await GooglePhotosAlbum.fetchImageUrls(dimg.albumLink).catch(() => isDetectedAFetchFail = true);
-        if (!photos || isDetectedAFetchFail) {
+        if (!photos || isDetectedAFetchFail || Object.keys(photos).length < 1) {
             console.debug("Photos object broken for serverId:: " + dimg.serverId)
             return;
         }
