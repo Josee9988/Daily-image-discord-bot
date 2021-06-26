@@ -134,13 +134,13 @@ export default class CommandsController {
                 if (forceChannelToBeTheSame) { // if we want the channel of the caller to be the same as the DB. (!dimg now)
                     if (!checkIfUserIsAdmin(message)) return;
                     if (server.channelId == message.channel.id) {
-                        await this.fetchAndSendPhoto(server);
+                        await this.fetchAndSendPhoto(server).catch(() => console.error(`fetchAndSendPhoto failed for server ${server}`));
                     } else { // if the caller channel isn't the same show error
                         await message.channel.send(
                             ":interrobang:To use this command, talk in the previously selected channel");
                     }
                 } else { // if it is called from setAlbumLink to display the 1st photo, after the !dimg albumlink
-                    await this.fetchAndSendPhoto(server);
+                    await this.fetchAndSendPhoto(server).catch(() => console.error(`fetchAndSendPhoto failed for server ${server}`));
                 }
             } else { // albumlink or channel id aren't set
                 await message.channel.send(
@@ -152,7 +152,7 @@ export default class CommandsController {
             // iterate over every document and send the photos to every respective server
             for (const dimg of dimgs) {
                 if (dimg.albumLink != null || dimg.channelId != null)
-                    await this.fetchAndSendPhoto(dimg);
+                    await this.fetchAndSendPhoto(dimg).catch(() => console.error(`fetchAndSendPhoto failed for server ${dimg.serverId}`));
             }
         }
     }
