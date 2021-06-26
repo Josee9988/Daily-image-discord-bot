@@ -151,8 +151,9 @@ export default class CommandsController {
             let dimgs = await this.databaseController.findAll();
             // iterate over every document and send the photos to every respective server
             for (const dimg of dimgs) {
-                if (dimg.albumLink != null || dimg.channelId != null)
-                    await this.fetchAndSendPhoto(dimg).catch(() => console.error(`fetchAndSendPhoto failed for server ${dimg.serverId}`));
+                if (dimg != null && dimg.albumLink != null && dimg.channelId != null && dimg.serverId != null) {
+                    this.fetchAndSendPhoto(dimg).catch(() => console.error(`fetchAndSendPhoto failed for server ${dimg.serverId}`));
+                }
             }
         }
     }
@@ -174,7 +175,7 @@ export default class CommandsController {
 
         if (dimg.channelId && this.client.channels.cache.get(dimg.channelId)) { // if the channel is specified send the image
             if (!photos[randomPhoto] || !photos[randomPhoto].url) {
-                console.error("Url does not exist for server " + dimg.serverId + " with the photo object being like: " + photos[randomPhoto] + "object:");
+                console.error("Url does not exist for server " + dimg.serverId + " with the photo object being like: " + photos[randomPhoto] + " object:");
                 return;
             }
             await this.client.channels.cache.get(dimg.channelId).send(photos[randomPhoto].url)
