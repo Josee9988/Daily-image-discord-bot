@@ -177,11 +177,12 @@ export default class CommandsController {
                 console.error("Url does not exist for server " + dimg.serverId + " with the photo object being like: " + photos[randomPhoto] + "object:");
                 return;
             }
-            await this.client.channels.cache.get(dimg.channelId)
-                .send(photos[randomPhoto].url).catch((e: any) => console.error(`Couldn't send photo ${photos[randomPhoto]} with url ${photos[randomPhoto].url}.\nE: ${e}`));
-            await this.client.channels.cache.get(dimg.channelId).send(`${msg1Detected}`);
-            await this.client.channels.cache.get(dimg.channelId)
-                .send(`${sendRandomPhotoMessage.msg2}**${new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString()}**`);
+            await this.client.channels.cache.get(dimg.channelId).send(photos[randomPhoto].url)
+                .catch((e: any) => console.error(`Couldn't send photo ${photos[randomPhoto]} with url ${photos[randomPhoto].url}.\nE: ${e}`));
+            await this.client.channels.cache.get(dimg.channelId).send(`${msg1Detected}`)
+                .catch((e: any) => console.error(`Couldn't send photo ${photos[randomPhoto]} with url ${photos[randomPhoto].url}.\nE: ${e}`));
+            await this.client.channels.cache.get(dimg.channelId).send(`${sendRandomPhotoMessage.msg2}**${new Date(photos[randomPhoto].imageUpdateDate).toLocaleDateString()}**`)
+                .catch((e: any) => console.error(`Couldn't send photo ${photos[randomPhoto]} with url ${photos[randomPhoto].url}.\nE: ${e}`));
         }
     }
 }
