@@ -23,6 +23,8 @@ A simple bot that let you send **daily random images** from any *public google p
 This bot was made for fun purposes, "*dimg*" does **not** collect unnecessary data or sell anything to third parties.
 Feel safe🛡️.
 
+**⚠️DISCLAIMER:** The bot could not be installed anymore on more than 100 servers. The discord staff claimed that: "*it's clear that you joined a number of servers inorganically in order to grow your bot and qualify for verification. Therefore, we cannot verify your bot*" so I decided to leave it as is, and stop its development until the discord team decides to change its mind, because, obviously that what they are claiming is completely wrong and inaccurate⚠️.
+
 ---
 
 ## **Installation** 🚥
