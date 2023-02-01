@@ -35,7 +35,7 @@
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "google-photos-album-image-url-fetch": "^2.2.0",
-    "mongoose": "^5.11.15",
+    "mongoose": "^5.13.15",
     "tslib": "^1.14.1"
   },
   "devDependencies": {
